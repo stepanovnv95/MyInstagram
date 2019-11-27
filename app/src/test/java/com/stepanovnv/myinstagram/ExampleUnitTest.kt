@@ -1,4 +1,4 @@
-package stepanovnv.com.myinstagram
+package com.stepanovnv.myinstagram
 
 import org.junit.Test
 

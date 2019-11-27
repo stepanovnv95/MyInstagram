@@ -1,4 +1,4 @@
-package stepanovnv.com.myinstagram
+package com.stepanovnv.myinstagram
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
