@@ -1,14 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".PostFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              tools:context=".PostFragment" android:orientation="vertical"
+              android:background="#FFFFFF">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ImageView
+            android:src="@drawable/post_image_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
-
-</FrameLayout>
+            android:layout_height="wrap_content" android:id="@+id/imageView2"
+            android:adjustViewBounds="true"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:gravity="center" android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp">
+            <ImageButton
+                    android:src="@drawable/ic_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/imageButton3" android:layout_weight="1"
+                    android:background="@null"/>
+            <TextView
+                    android:text="322"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView3" android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:gravity="center" android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp">
+            <ImageButton
+                    android:src="@drawable/ic_favorites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/imageButton4" android:layout_weight="1"
+                    android:background="@null"/>
+            <TextView
+                    android:text="228"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView4" android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
