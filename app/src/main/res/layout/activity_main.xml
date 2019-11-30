@@ -7,13 +7,6 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-    <!-- <fragment android:id="@+id/post_fragment"
-              tools:layout="@layout/fragment_post"
-              android:name="com.stepanovnv.myinstagram.PostFragment"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              app:layout_constraintTop_toTopOf="parent"/> -->
-
     <fragment android:id="@+id/home_fragment"
               android:name="com.stepanovnv.myinstagram.HomeFragment"
               android:layout_width="match_parent"
