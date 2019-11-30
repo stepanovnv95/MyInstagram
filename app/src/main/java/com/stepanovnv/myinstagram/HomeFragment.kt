@@ -18,7 +18,7 @@ class HomeFragment : ListFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val adapter = ArrayAdapter<String>(activity as Context, android.R.layout.simple_list_item_1, catNames)
+        val adapter = PostAdapter(activity as Context, android.R.layout.simple_list_item_1, catNames)
         listAdapter = adapter
     }
 
