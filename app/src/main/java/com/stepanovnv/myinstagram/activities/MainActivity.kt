@@ -1,7 +1,8 @@
-package com.stepanovnv.myinstagram
+package com.stepanovnv.myinstagram.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.stepanovnv.myinstagram.R
 
 
 class MainActivity : AppCompatActivity() {
