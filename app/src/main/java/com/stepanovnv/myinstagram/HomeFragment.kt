@@ -22,7 +22,7 @@ class HomeFragment : ListFragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         _swipeRefreshLayout = view.findViewById(R.id.swipe_refresh)
 
-        refresh()
+//        refresh()
 
         return view
     }
