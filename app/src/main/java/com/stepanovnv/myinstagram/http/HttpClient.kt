@@ -18,7 +18,7 @@ class HttpClient(tag: String, context: Context) {
             Method.POST, request.url,
             Response.Listener { response ->
                 try {
-                    onResponse(JSONObject(response))
+                    onResponse(JSONObject(response.replace(';', ':')))
                 } catch (e: JSONException) {
                     onError(e.toString())
                 }

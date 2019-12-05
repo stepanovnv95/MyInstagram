@@ -1,4 +1,4 @@
-package com.stepanovnv.myinstagram
+package com.stepanovnv.myinstagram.fragments
 
 //import android.content.Context
 //import android.net.Uri
@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.stepanovnv.myinstagram.R
 
 
 // TODO: Rename parameter arguments, choose names that match

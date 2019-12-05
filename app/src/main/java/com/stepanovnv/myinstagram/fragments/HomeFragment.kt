@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.ListFragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.stepanovnv.myinstagram.PostData
+import com.stepanovnv.myinstagram.data.PostData
 import com.stepanovnv.myinstagram.R
 import com.stepanovnv.myinstagram.http.HttpClient
 import com.stepanovnv.myinstagram.http.requests.HomeRequest
+import org.json.JSONException
 import org.json.JSONObject
 
 
@@ -53,7 +54,7 @@ class HomeFragment : ListFragment() {
     private fun loadPostData() {
         onLoadingBegin()
         _httpClient?.addRequest(
-            HomeRequest(4),
+            HomeRequest(),
             {response -> this.onHttpResponse(response)},
             {error -> this.onHttpError(error)}
         )
@@ -67,11 +68,22 @@ class HomeFragment : ListFragment() {
 
     private fun onHttpResponse(response: JSONObject) {
         Log.d(_tag, response.toString())
+
+        val posts = response.optJSONArray("posts")
+        if (posts != null) {
+            for (i in 0 until posts.length()) {
+                val jsonPost = posts.optJSONObject(i) ?: continue
+                val dataPost = parseJsonPost(jsonPost)
+                if (dataPost != null)
+                    _postsData.add(dataPost)
+            }
+        }
+
         onLoadingFinished()
     }
 
     private fun onHttpError(error: String) {
-        Log.d(_tag, error)
+        Log.e(_tag, error)
         onLoadingFinished()
     }
 
@@ -79,6 +91,16 @@ class HomeFragment : ListFragment() {
         _swipeRefreshLayout?.isRefreshing = false
         if (_postsData.size == 0 )
             _refreshHint?.visibility = View.VISIBLE
+    }
+
+    private fun parseJsonPost(post: JSONObject): PostData? {
+        try {
+            val id = post.getInt("id")
+            return PostData(id)
+        }catch (e: JSONException) {
+            Log.e(_tag, e.toString())
+        }
+        return null
     }
 
 }
