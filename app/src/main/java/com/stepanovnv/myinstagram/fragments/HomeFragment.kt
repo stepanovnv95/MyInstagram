@@ -48,9 +48,9 @@ class HomeFragment : ListFragment() {
             }
         })
 
-        _swipeRefreshLayout?.setOnRefreshListener { this.loadPostData() }
+        _swipeRefreshLayout?.setOnRefreshListener { this.reloadPosts() }
 
-//        loadPostData()
+//        reloadPosts()
 
         return view
     }
@@ -67,6 +67,11 @@ class HomeFragment : ListFragment() {
 
         _listAdapter = PostAdapter(activity as Context, android.R.layout.simple_list_item_1, _postsData)
         listAdapter = _listAdapter
+    }
+
+    private fun reloadPosts() {
+        _postsData.clear()
+        loadPostData()
     }
 
     private fun loadPostData() {
@@ -96,7 +101,6 @@ class HomeFragment : ListFragment() {
 
     private fun onLoadingFinished() {
         _listAdapter?.notifyDataSetChanged()
-
         _swipeRefreshLayout?.isRefreshing = false
     }
 
