@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
+import android.widget.ListView
 import androidx.fragment.app.ListFragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.stepanovnv.myinstagram.R
@@ -24,6 +26,7 @@ class HomeFragment : ListFragment() {
     private var _httpClient: HttpClient? = null
     private var _listAdapter: PostAdapter? = null
     private var _swipeRefreshLayout: SwipeRefreshLayout? = null
+    private var _listView: ListView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
@@ -33,6 +36,17 @@ class HomeFragment : ListFragment() {
             val context = activity?.applicationContext ?: throw Exception("Can't get the context")
             _httpClient = HttpClient(_tag, context)
         }
+
+        _listView?.setOnScrollListener(object: AbsListView.OnScrollListener {
+            override fun onScrollStateChanged(view: AbsListView, scrollState: Int) {}
+            override fun onScroll(view: AbsListView, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
+                if (_listView?.getChildAt(0) != null) {
+                    _swipeRefreshLayout?.isEnabled =
+                        _listView?.firstVisiblePosition == 0 &&
+                        _listView?.getChildAt(0)!!.top == 0
+                }
+            }
+        })
 
         _swipeRefreshLayout?.setOnRefreshListener { this.loadPostData() }
 
@@ -44,6 +58,8 @@ class HomeFragment : ListFragment() {
     private fun findWidgets(view: View) {
         if (_swipeRefreshLayout == null)
             _swipeRefreshLayout = view.findViewById(R.id.swipe_refresh)
+        if (_listView == null)
+            _listView = view.findViewById(android.R.id.list)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
