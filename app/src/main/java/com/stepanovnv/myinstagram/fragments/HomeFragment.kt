@@ -23,18 +23,21 @@ class HomeFragment : ListFragment() {
 
     private val _tag = "HomeFragment"
     private val _postsData = ArrayList<PostData>()
+
+    private var _context: Context? = null
     private var _httpClient: HttpClient? = null
     private var _listAdapter: PostAdapter? = null
     private var _swipeRefreshLayout: SwipeRefreshLayout? = null
     private var _listView: ListView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _context = activity?.applicationContext ?: throw Exception("Can't get the context")
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
         findWidgets(view)
 
         if (_httpClient == null) {
-            val context = activity?.applicationContext ?: throw Exception("Can't get the context")
-            _httpClient = HttpClient(_tag, context)
+            _httpClient = HttpClient(_tag, _context as Context)
         }
 
         _listView?.setOnScrollListener(object: AbsListView.OnScrollListener {
@@ -77,9 +80,12 @@ class HomeFragment : ListFragment() {
     private fun loadPostData() {
         onLoadingBegin()
         _httpClient?.addRequest(
-            HomeRequest(),
-            {response -> this.onHttpResponse(response)},
-            {error -> this.onHttpError(error)}
+            HomeRequest(
+                _context,
+                null,
+                {response -> this.onHttpResponse(response)},
+                {error -> this.onHttpError(error)}
+                )
         )
     }
 

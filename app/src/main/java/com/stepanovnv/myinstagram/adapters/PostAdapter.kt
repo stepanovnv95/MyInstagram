@@ -16,7 +16,7 @@ class PostAdapter(context: Context, resource: Int, objects: List<PostData>) :
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = PostView(_context)
-        view.url = _array[position].url
+        view.postData = _array[position]
         return view
     }
 

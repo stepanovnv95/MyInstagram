@@ -1,11 +1,19 @@
 package com.stepanovnv.myinstagram.http.requests
 
+import android.content.Context
+import com.stepanovnv.myinstagram.R
+import org.json.JSONObject
 
-class HomeRequest(private val _lastId: Int? = null)
-    : AbstractRequest() {
 
-    override val url: String = "https://reactor.pbip.ru/nikita4you/scripts/get_all_post.php"
-//    override val url: String = "http://v-wall.net/test.php"
+class HomeRequest(
+    context: Context?,
+    private val _lastId: Int? = null,
+    onResponse: (JSONObject) -> Unit,
+    onError: (String) -> Unit
+)
+    : PostRequest(context, onResponse, onError) {
+
+    override val url: String = getString(R.string.url_home)
     override val params: Map<String, String>
         get() {
             val p = HashMap<String, String>()

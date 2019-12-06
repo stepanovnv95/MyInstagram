@@ -6,7 +6,8 @@
        tools:context=".views.PostView" android:orientation="vertical">
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/background" >
 
         <ImageView
                 app:layout_constraintTop_toTopOf="parent"
@@ -18,6 +19,6 @@
                 app:layout_constraintDimensionRatio="1:1"
                 android:id="@+id/imageView"
                 android:tint="@color/colorPrimaryDark"
-                android:background="@color/background" android:scaleType="center"/>
+                android:scaleType="center"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>
