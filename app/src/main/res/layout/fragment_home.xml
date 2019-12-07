@@ -16,27 +16,32 @@
                 android:dividerHeight="32dp">
         </ListView>
 
-        <LinearLayout
-                android:id="@android:id/empty"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                tools:ignore="UseCompoundDrawables">
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_arrow_down"
-                    android:id="@+id/imageView5"
-                    android:tint="@color/colorPrimaryDark"/>
-            <TextView
-                    android:text="@string/refresh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView8"
+
+        <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:id="@+id/refresh_hint">
+            <LinearLayout
+                    android:id="@android:id/empty"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textColor="@color/colorPrimaryDark"/>
-        </LinearLayout>
+                    tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_arrow_down"
+                        android:id="@+id/imageView5"
+                        android:tint="@color/colorPrimaryDark"/>
+                <TextView
+                        android:text="@string/refresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView8"
+                        android:gravity="center"
+                        android:textColor="@color/colorPrimaryDark"/>
+            </LinearLayout>
+        </FrameLayout>
 
     </FrameLayout>
 
