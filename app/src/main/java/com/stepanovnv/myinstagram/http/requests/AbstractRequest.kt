@@ -5,11 +5,18 @@ import android.content.ContextWrapper
 import org.json.JSONObject
 
 
-abstract class AbstractRequest(context: Context?, val onError: (String) -> Unit) : ContextWrapper(context) {
+abstract class AbstractRequest(
+    context: Context?,  // TODO("What for is need the context?")
+    var onError: ((String) -> Unit)? = null
+) : ContextWrapper(context) {
     abstract val url: String
 }
 
-abstract class PostRequest(context: Context?, val onResponse: (JSONObject) -> Unit, onError: (String) -> Unit)
+abstract class PostRequest(
+    context: Context?,
+    var onResponse: ((JSONObject) -> Unit)? = null,
+    onError: ((String) -> Unit)? = null
+)
     : AbstractRequest(context, onError) {
     abstract val params: Map<String, String>
 }

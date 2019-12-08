@@ -1,23 +1,24 @@
 package com.stepanovnv.myinstagram.adapters
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.stepanovnv.myinstagram.R
 import com.stepanovnv.myinstagram.data.PostData
+import com.stepanovnv.myinstagram.views.PostView
 
 
 // TODO("Rename adapter and holder")
 class MyPostAdapter(private val _dataset: Collection<PostData>)
     : RecyclerView.Adapter<MyPostAdapter.MyViewHolder>() {
 
-    class MyViewHolder(val view: TextView) : RecyclerView.ViewHolder(view)
+    class MyViewHolder(val view: PostView) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val textView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.view_base_item, parent, false) as TextView
-        return MyViewHolder(textView)
+        val postView = PostView(parent.context)
+        postView.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        return MyViewHolder(postView)
     }
 
     override fun getItemCount(): Int {
@@ -25,7 +26,7 @@ class MyPostAdapter(private val _dataset: Collection<PostData>)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.view.text = _dataset.elementAt(position).url
+        holder.view.postData = _dataset.elementAt(position)
     }
 
 }

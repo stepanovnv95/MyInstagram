@@ -15,8 +15,7 @@
         <androidx.recyclerview.widget.RecyclerView
               android:id="@+id/list"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
-        </androidx.recyclerview.widget.RecyclerView>
+              android:layout_height="match_parent"/>
 
         <LinearLayout
                 android:id="@+id/empty"
@@ -31,12 +30,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_arrow_down"
-                    android:contentDescription="@string/description_arrow_down"/>
+                    android:contentDescription="@string/description_arrow_down"
+                    android:tint="@color/colorPrimaryDark"/>
             <TextView
                     android:text="@string/refresh"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"/>
         </LinearLayout>
 
     </FrameLayout>

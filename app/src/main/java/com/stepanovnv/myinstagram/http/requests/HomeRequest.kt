@@ -8,8 +8,8 @@ import org.json.JSONObject
 class HomeRequest(
     context: Context?,
     private val _lastId: Int? = null,
-    onResponse: (JSONObject) -> Unit,
-    onError: (String) -> Unit
+    onResponse: ((JSONObject) -> Unit)? = null,
+    onError: ((String) -> Unit)? = null
 )
     : PostRequest(context, onResponse, onError) {
 

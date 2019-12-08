@@ -2,6 +2,7 @@ package com.stepanovnv.myinstagram.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,9 @@ import com.stepanovnv.myinstagram.R
 import com.stepanovnv.myinstagram.adapters.MyPostAdapter
 import com.stepanovnv.myinstagram.data.PostData
 import com.stepanovnv.myinstagram.http.HttpClient
+import com.stepanovnv.myinstagram.http.requests.PostRequest
+import org.json.JSONException
+import org.json.JSONObject
 
 
 abstract class BaseListFragment : Fragment() {
@@ -45,7 +49,63 @@ abstract class BaseListFragment : Fragment() {
 
         _httpClient = HttpClient(TAG, _context)
 
+        _refreshView.setOnRefreshListener { reloadPostData() }
+        loadPostData()
+
         return view
+    }
+
+    protected abstract fun constructHttpRequest(): PostRequest
+
+    private fun reloadPostData() {
+        val size = _postsArray.size
+        _postsArray.clear()
+        _adapter.notifyItemRangeRemoved(0, size)
+        loadPostData()
+    }
+
+    private fun loadPostData() {
+        onLoadingBegin()
+        val request = constructHttpRequest()
+        request.onResponse = { response -> onHttpResponse(response) }
+        request.onError = { error -> onError(error)}
+        _httpClient.addRequest(request)
+    }
+
+    private fun onLoadingBegin() {
+        _emptyHintView.visibility = View.GONE
+    }
+
+    private fun onHttpResponse(jsonObject: JSONObject) {
+        Log.d(TAG, jsonObject.toString())
+        parseJsonResponse(jsonObject)
+        onLoadingFinished()
+    }
+
+    private fun onError(error: String) {
+        Log.e(TAG, error)
+        onLoadingFinished()
+    }
+
+    private fun onLoadingFinished() {
+        _refreshView.isRefreshing = false
+        if (_postsArray.size == 0)
+            _emptyHintView.visibility = View.VISIBLE
+    }
+
+    private fun parseJsonResponse(jsonObject: JSONObject) {
+        val posts = jsonObject.optJSONArray("posts") ?: return
+        val sizeBefore = _postsArray.size
+        for (i in 0 until posts.length()) {
+            val jsonPost = posts.optJSONObject(i) ?: continue
+            try {
+                val postDate = PostData.fromJson(jsonPost)
+                _postsArray.add(postDate)
+            } catch (e: JSONException) {
+                Log.e(TAG, e.toString())
+            }
+        }
+        _adapter.notifyItemRangeInserted(sizeBefore, _postsArray.size - sizeBefore)
     }
 
 }

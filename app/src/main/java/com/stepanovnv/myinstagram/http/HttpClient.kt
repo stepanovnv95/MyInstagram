@@ -31,13 +31,13 @@ class HttpClient(tag: String, context: Context) {
             Method.POST, request.url,
             Response.Listener { response ->
                 try {
-                    request.onResponse(JSONObject(response))
+                    request.onResponse?.invoke(JSONObject(response))
                 } catch (e: JSONException) {
-                    request.onError(e.toString())
+                    request.onError?.invoke(e.toString())
                 }
             },
             Response.ErrorListener { error ->
-                request.onError(error.toString())
+                request.onError?.invoke(error.toString())
             }
         ) {
             override fun getParams(): MutableMap<String, String> {
@@ -56,7 +56,7 @@ class HttpClient(tag: String, context: Context) {
             Response.Listener { response: Bitmap -> request.onResponse(response) },
             0, 0, null,
             Bitmap.Config.RGB_565,
-            Response.ErrorListener { error -> request.onError(error.toString()) }
+            Response.ErrorListener { error -> request.onError?.invoke(error.toString()) }
         )
         val queue = HttpQueueSingleton.getInstance(_context).requestQueue
         queue.add(r)

@@ -8,14 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
+import android.widget.LinearLayout
 import com.stepanovnv.myinstagram.R
 import com.stepanovnv.myinstagram.data.PostData
 import com.stepanovnv.myinstagram.http.HttpClient
 import com.stepanovnv.myinstagram.http.requests.ImageRequest
 
 
-class PostView(context: Context) : FrameLayout(context) {
+class PostView(context: Context) : LinearLayout(context) {
 
     private val _baseTag = "PostView_"
     private var _tag: String = _baseTag
@@ -23,39 +23,31 @@ class PostView(context: Context) : FrameLayout(context) {
     private var _imageView: ImageView
     var postData: PostData? = null
         set(value) {
-
-            if (value != null) {
-                _tag = _baseTag + value.id.toString()
-                setImage(null)
-                _httpClient.addRequest(ImageRequest(
-                    context,
-                    value.url,
-                    { response ->
-                        Log.d(_tag, "Image from %s loaded".format(value.url))
-                        setImage(response)
-                    },
-                    { error -> Log.e(_tag, error) }
-                ))
-            }
+            value ?: return
+            _tag = _baseTag + value.id.toString()
+            _httpClient.addRequest(ImageRequest(
+                context,
+                value.url,
+                { response ->
+                    Log.d(_tag, "Image from %s loaded".format(value.url))
+                    setImage(response)
+                },
+                { error -> Log.e(_tag, error) }
+            ))
 
             field = value
         }
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_post, this, true)
+        orientation = VERTICAL
         _imageView = findViewById(R.id.imageView)
         _httpClient = HttpClient(_tag, context)
     }
 
-    private fun setImage(image: Bitmap?) {
-        if (image != null) {
-            _imageView.setColorFilter(Color.rgb(0, 0, 0), PorterDuff.Mode.ADD)
-            _imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-            _imageView.setImageBitmap(image)
-        } else {
-            _imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark))
-            _imageView.scaleType = ImageView.ScaleType.CENTER
-            _imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_image_placeholder))
-        }
+    private fun setImage(image: Bitmap) {
+        _imageView.setColorFilter(Color.rgb(0, 0, 0), PorterDuff.Mode.ADD)
+        _imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        _imageView.setImageBitmap(image)
     }
 }
