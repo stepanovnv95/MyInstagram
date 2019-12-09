@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.stepanovnv.myinstagram.R
-import com.stepanovnv.myinstagram.adapters.MyPostAdapter
+import com.stepanovnv.myinstagram.adapters.PostListAdapter
 import com.stepanovnv.myinstagram.data.PostData
 import com.stepanovnv.myinstagram.http.HttpClient
 import com.stepanovnv.myinstagram.http.requests.PostRequest
@@ -27,7 +27,7 @@ abstract class BaseListFragment : Fragment() {
     protected abstract val TAG: String
 
     protected val postsArray = LinkedHashSet<PostData>()
-    private val _adapter = MyPostAdapter(postsArray)
+    private val _adapter = PostListAdapter(postsArray)
 
     private lateinit var _context: Context  // TODO("Maybe remove context?")
     private lateinit var _httpClient: HttpClient

@@ -7,9 +7,8 @@ import com.stepanovnv.myinstagram.data.PostData
 import com.stepanovnv.myinstagram.views.PostView
 
 
-// TODO("Rename adapter and holder")
 @Suppress("PrivatePropertyName")
-class MyPostAdapter(private val _dataset: Collection<PostData>)
+class PostListAdapter(private val _dataset: Collection<PostData>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class PostViewHolder(val view: PostView) : RecyclerView.ViewHolder(view)
