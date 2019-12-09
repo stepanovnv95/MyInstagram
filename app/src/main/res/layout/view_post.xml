@@ -19,6 +19,7 @@
                 app:layout_constraintDimensionRatio="1:1"
                 android:id="@+id/imageView"
                 android:tint="@color/colorPrimaryDark"
-                android:scaleType="center"/>
+                android:scaleType="center"
+                android:contentDescription="@string/description_post_image"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>

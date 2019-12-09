@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.FrameLayout
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.stepanovnv.myinstagram.R
@@ -41,6 +41,11 @@ class PostView(context: Context) : LinearLayout(context) {
     init {
         LayoutInflater.from(context).inflate(R.layout.view_post, this, true)
         orientation = VERTICAL
+        layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
         _imageView = findViewById(R.id.imageView)
         _httpClient = HttpClient(_tag, context)
     }

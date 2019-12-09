@@ -14,10 +14,6 @@ class MyPostAdapter(private val _dataset: Collection<PostData>)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val postView = PostView(parent.context)
-        postView.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
         return MyViewHolder(postView)
     }
 
