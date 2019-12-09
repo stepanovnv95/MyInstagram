@@ -26,11 +26,12 @@ abstract class BaseListFragment : Fragment() {
     @Suppress("PropertyName")
     protected abstract val TAG: String
 
-    private val _postsArray = LinkedHashSet<PostData>()
-    private val _adapter = MyPostAdapter(_postsArray)
+    protected val postsArray = LinkedHashSet<PostData>()
+    private val _adapter = MyPostAdapter(postsArray)
 
     private lateinit var _context: Context  // TODO("Maybe remove context?")
     private lateinit var _httpClient: HttpClient
+    private var _loading = false
 
     // widgets
     private lateinit var _refreshView: SwipeRefreshLayout
@@ -52,6 +53,7 @@ abstract class BaseListFragment : Fragment() {
         val itemDecoration = DividerItemDecoration(_listView.context, DividerItemDecoration.VERTICAL)
         itemDecoration.setDrawable(divider)
         _listView.addItemDecoration(itemDecoration)
+        _adapter.onEndScrolled = { loadPostData() }
 
         _httpClient = HttpClient(TAG, _context)
 
@@ -64,13 +66,17 @@ abstract class BaseListFragment : Fragment() {
     protected abstract fun constructHttpRequest(): PostRequest
 
     private fun reloadPostData() {
-        val size = _postsArray.size
-        _postsArray.clear()
+        val size = postsArray.size
+        postsArray.clear()
         _adapter.notifyItemRangeRemoved(0, size)
         loadPostData()
     }
 
     private fun loadPostData() {
+        if (_loading)
+            return
+        else
+            _loading = true
         onLoadingBegin()
         val request = constructHttpRequest()
         request.onResponse = { response -> onHttpResponse(response) }
@@ -95,23 +101,24 @@ abstract class BaseListFragment : Fragment() {
 
     private fun onLoadingFinished() {
         _refreshView.isRefreshing = false
-        if (_postsArray.size == 0)
+        if (postsArray.size == 0)
             _emptyHintView.visibility = View.VISIBLE
+        _loading = false
     }
 
     private fun parseJsonResponse(jsonObject: JSONObject) {
         val posts = jsonObject.optJSONArray("posts") ?: return
-        val sizeBefore = _postsArray.size
+        val sizeBefore = postsArray.size
         for (i in 0 until posts.length()) {
             val jsonPost = posts.optJSONObject(i) ?: continue
             try {
                 val postDate = PostData.fromJson(jsonPost)
-                _postsArray.add(postDate)
+                postsArray.add(postDate)
             } catch (e: JSONException) {
                 Log.e(TAG, e.toString())
             }
         }
-        _adapter.notifyItemRangeInserted(sizeBefore, _postsArray.size - sizeBefore)
+        _adapter.notifyItemRangeInserted(sizeBefore, postsArray.size - sizeBefore)
     }
 
 }

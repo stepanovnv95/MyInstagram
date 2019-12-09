@@ -39,7 +39,7 @@ class PostView(context: Context) : LinearLayout(context) {
         }
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.view_post, this, true)
+        LayoutInflater.from(context).inflate(R.layout.item_post, this, true)
         orientation = VERTICAL
         layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,

@@ -8,7 +8,10 @@ class HotFragment : BaseListFragment() {
 
     override val TAG = "HotFragment"
     override fun constructHttpRequest(): PostRequest {
-        return HomeRequest(context)
+        return HomeRequest(
+            context,
+            if (postsArray.size > 0) postsArray.last().id else null
+        )
     }
 
 }
