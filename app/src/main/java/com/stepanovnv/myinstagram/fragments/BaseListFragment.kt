@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -46,6 +48,10 @@ abstract class BaseListFragment : Fragment() {
             layoutManager = LinearLayoutManager(_context)
             adapter = _adapter
         }
+        val divider = ContextCompat.getDrawable(_listView.context, R.drawable.list_divider)!!
+        val itemDecoration = DividerItemDecoration(_listView.context, DividerItemDecoration.VERTICAL)
+        itemDecoration.setDrawable(divider)
+        _listView.addItemDecoration(itemDecoration)
 
         _httpClient = HttpClient(TAG, _context)
 
