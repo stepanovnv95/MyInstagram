@@ -6,8 +6,7 @@
        android:orientation="vertical">
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background" >
+            android:layout_height="wrap_content">
 
         <ImageView
                 app:layout_constraintTop_toTopOf="parent"
@@ -22,4 +21,38 @@
                 android:scaleType="center"
                 android:contentDescription="@string/description_post_image"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables"
+            android:background="@color/background">
+
+        <Button
+                android:id="@+id/like_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:drawableLeft="@drawable/ic_like"
+                android:drawablePadding="-15dp"
+                tools:ignore="ButtonStyle,RtlHardcoded"
+                style="?android:attr/borderlessButtonStyle"/>
+
+        <Button
+                android:id="@+id/dislike_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:drawableLeft="@drawable/ic_like"
+                android:drawablePadding="-15dp"
+                tools:ignore="ButtonStyle,RtlHardcoded"
+                style="?android:attr/borderlessButtonStyle"/>
+
+    </LinearLayout>
 </merge>

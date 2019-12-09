@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.stepanovnv.myinstagram.R
 import com.stepanovnv.myinstagram.data.PostData
 import com.stepanovnv.myinstagram.http.HttpClient
@@ -25,6 +26,7 @@ class PostView(context: Context) : LinearLayout(context) {
         set(value) {
             value ?: return
             _tag = _baseTag + value.id.toString()
+            setImage(null)
             _httpClient.addRequest(ImageRequest(
                 context,
                 value.url,
@@ -50,9 +52,15 @@ class PostView(context: Context) : LinearLayout(context) {
         _httpClient = HttpClient(_tag, context)
     }
 
-    private fun setImage(image: Bitmap) {
-        _imageView.setColorFilter(Color.rgb(0, 0, 0), PorterDuff.Mode.ADD)
-        _imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-        _imageView.setImageBitmap(image)
+    private fun setImage(image: Bitmap?) {
+        if (image != null) {
+            _imageView.setColorFilter(Color.rgb(0, 0, 0), PorterDuff.Mode.ADD)
+            _imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+            _imageView.setImageBitmap(image)
+        } else {
+            _imageView.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark))
+            _imageView.scaleType = ImageView.ScaleType.CENTER
+            _imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_image_placeholder))
+        }
     }
 }
