@@ -44,6 +44,7 @@ class PostListAdapter(private val _dataset: Collection<PostData>)
 //                onEndScrolled?.invoke()
 //            }
 //        }
+
         (holder as PostViewHolder).view.postData = _dataset.elementAt(position)
         if (position == itemCount - 1)
             onEndScrolled?.invoke()
@@ -58,4 +59,7 @@ class PostListAdapter(private val _dataset: Collection<PostData>)
 //        return if (position == itemCount - 1) VIEW_TYPE_LOADING else VIEW_TYPE_POST
 //    }
 
+    override fun getItemId(position: Int): Long {
+        return _dataset.elementAt(position).id.toLong()
+    }
 }

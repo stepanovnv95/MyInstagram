@@ -29,36 +29,44 @@ abstract class BaseListFragment : Fragment() {
     protected val postsArray = LinkedHashSet<PostData>()
     private val _adapter = PostListAdapter(postsArray)
 
-    private lateinit var _context: Context  // TODO("Maybe remove context?")
+    private lateinit var _appContext: Context  // TODO("Maybe remove context?")
     private lateinit var _httpClient: HttpClient
     private var _loading = false
 
     // widgets
     private lateinit var _refreshView: SwipeRefreshLayout
-    private lateinit var _listView: RecyclerView
+    private var _listView: RecyclerView? = null
     private lateinit var _emptyHintView: View
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _context = activity!!.applicationContext
+        _appContext = activity!!.applicationContext
 
         val view = inflater.inflate(R.layout.fragment_base_list, container, false)
         _refreshView = view.findViewById(R.id.refresh)
         _emptyHintView = view.findViewById(R.id.empty)
+        if (_listView == null) {
+            _adapter.setHasStableIds(true)
+        } else {
+            _listView!!.adapter = null
+        }
         _listView = view.findViewById<RecyclerView>(R.id.list).apply {
-            layoutManager = LinearLayoutManager(_context)
+            layoutManager = LinearLayoutManager(context)
             adapter = _adapter
         }
-        val divider = ContextCompat.getDrawable(_listView.context, R.drawable.list_divider)!!
-        val itemDecoration = DividerItemDecoration(_listView.context, DividerItemDecoration.VERTICAL)
+        val divider = ContextCompat.getDrawable(_listView!!.context, R.drawable.list_divider)!!
+        val itemDecoration = DividerItemDecoration(_listView!!.context, DividerItemDecoration.VERTICAL)
         itemDecoration.setDrawable(divider)
-        _listView.addItemDecoration(itemDecoration)
+        _listView!!.addItemDecoration(itemDecoration)
         _adapter.onEndScrolled = { loadPostData() }
 
-        _httpClient = HttpClient(TAG, _context)
+        _httpClient = HttpClient(TAG, _appContext)
 
         _refreshView.setOnRefreshListener { reloadPostData() }
-        loadPostData()
+        if (postsArray.isEmpty())
+            loadPostData()
+        else
+            onLoadingFinished()
 
         return view
     }
@@ -85,6 +93,8 @@ abstract class BaseListFragment : Fragment() {
     }
 
     private fun onLoadingBegin() {
+        if (postsArray.size == 0)
+            _refreshView.isRefreshing = true
         _emptyHintView.visibility = View.GONE
     }
 
@@ -103,6 +113,8 @@ abstract class BaseListFragment : Fragment() {
         _refreshView.isRefreshing = false
         if (postsArray.size == 0)
             _emptyHintView.visibility = View.VISIBLE
+        else
+            _emptyHintView.visibility = View.GONE
         _loading = false
     }
 
