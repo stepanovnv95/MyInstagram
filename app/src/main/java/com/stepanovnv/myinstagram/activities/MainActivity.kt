@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
 
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, _homeFragment)
-        transaction.addToBackStack(null)
         transaction.commit()
 
         _menu.setOnNavigationItemSelectedListener { menuItem -> onMenuSelected(menuItem) }
