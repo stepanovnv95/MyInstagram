@@ -1,46 +1,82 @@
 package com.stepanovnv.myinstagram.data
 
-import android.util.Log
+import android.content.Context
 import org.json.JSONObject
 
 
 class PostData(
+    applicationContext: Context,
     val id: Int,
     val url:String,
-    var likes: Int,
-    var dislikes: Int
+    likes: Int,
+    dislikes: Int
 ) {
     companion object {
-        fun fromJson(json: JSONObject): PostData {
+        fun fromJson(applicationContext: Context, json: JSONObject): PostData {
             val id = json.getInt("id")
             val url = json.getString("image_url")
             val likes = json.getInt("likes")
             val dislikes = json.getInt("dislikes")
-            return PostData(id, url, likes, dislikes)
+            return PostData(applicationContext, id, url, likes, dislikes)
         }
     }
+
+    var likes = likes
+//        get() = if (isLiked && field == 0) 1 else field
+
+    var dislikes = dislikes
+//        get() = if (isDisliked && field == 0) 1 else field
 
     var isLiked = false
         set(value) {
             if (field == value) return
             field = value
             if (value) {
+                likeStatus = "like"
                 isDisliked = false
                 ++likes
-            } else
+            } else {
+                if (likeStatus == "like")
+                    likeStatus = "none"
                 --likes
+            }
         }
+        get() = _postDao.getLikeStatus(id) == "like"
 
     var isDisliked = false
         set(value) {
             if (field == value) return
             field = value
             if (value) {
+                likeStatus = "dislike"
                 isLiked = false
                 ++dislikes
-            } else
+            } else {
+                if (likeStatus == "dislike")
+                    likeStatus = "none"
                 --dislikes
+            }
         }
+        get() = _postDao.getLikeStatus(id) == "dislike"
+
+    private var likeStatus: String = "none"
+        set(value) {
+            if (field == value) return
+            field = value
+            _postDao.changeLikeStatus(id, value)
+        }
+
+
+    private val _postDao = PostDatabaseSingleton.getInstance(applicationContext).db.postDao()
+    init {
+        if (_postDao.getItemById(id) == null) {
+            _postDao.insert(Post(id))
+        }
+        likeStatus = _postDao.getLikeStatus(id)
+        isLiked = (likeStatus == "like")
+        isDisliked = (likeStatus == "dislike")
+    }
+
 
 //    interface PostDataListener {
 //        fun onPostDataIsLikedChanged(isLiked: Boolean)

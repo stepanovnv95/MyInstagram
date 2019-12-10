@@ -124,7 +124,7 @@ abstract class BaseListFragment : Fragment() {
         for (i in 0 until posts.length()) {
             val jsonPost = posts.optJSONObject(i) ?: continue
             try {
-                val postDate = PostData.fromJson(jsonPost)
+                val postDate = PostData.fromJson(_appContext ,jsonPost)
                 postsArray.add(postDate)
             } catch (e: JSONException) {
                 Log.e(TAG, e.toString())
