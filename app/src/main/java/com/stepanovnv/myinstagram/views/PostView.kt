@@ -18,7 +18,7 @@ import com.stepanovnv.myinstagram.http.HttpClient
 import com.stepanovnv.myinstagram.http.requests.ImageRequest
 
 
-class PostView(context: Context) : LinearLayout(context) {
+class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataListener*/ {
 
     private val _baseTag = "PostView_"
     private var _tag: String = _baseTag
@@ -34,20 +34,25 @@ class PostView(context: Context) : LinearLayout(context) {
 
     var postData: PostData? = null
         set(value) {
-            value ?: return
+//            if (field != null) {
+//                field!!.removeSubscriber(this)
+//            }
 
-            _tag = _baseTag + value.id.toString()
-
+            if (value != null) {
+                _tag = _baseTag + value.id.toString()
+                setLikes(value.likes, value.dislikes)
+//                value.addSubscriber(this)
+                _httpClient.addRequest(ImageRequest(
+                    context,
+                    value.url,
+                    { response -> setImage(response) },
+                    { error -> Log.e(_tag, error) }
+                ))
+            } else {
+                tag = _baseTag
+            }
 
             setImage(null)
-            setLikes(value.likes, value.dislikes)
-
-            _httpClient.addRequest(ImageRequest(
-                context,
-                value.url,
-                { response -> setImage(response) },
-                { error -> Log.e(_tag, error) }
-            ))
 
             field = value
         }
@@ -69,6 +74,40 @@ class PostView(context: Context) : LinearLayout(context) {
         _dislikeImage = findViewById(R.id.dislike_image)
         _dislikeCount = findViewById(R.id.dislike_text)
         _dislikeButton = findViewById(R.id.dislike_button)
+
+        _likeButton.setOnClickListener {
+            postData?.isLiked = ! postData!!.isLiked
+            updateLikes()
+        }
+
+        _dislikeButton.setOnClickListener {
+            postData?.isDisliked = ! postData!!.isDisliked
+            updateLikes()
+        }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        updateLikes()
+    }
+
+    private fun updateLikes() {
+        _likeCount.text = postData?.likes.toString()
+        _dislikeCount.text = postData?.dislikes.toString()
+
+        val likeColor = ContextCompat.getColor(
+            context,
+            if (postData?.isLiked as Boolean) R.color.colorAccent else R.color.colorPrimaryDark
+        )
+        _likeCount.setTextColor(likeColor)
+        _likeImage.setColorFilter(likeColor)
+
+        val dislikeColor = ContextCompat.getColor(
+            context,
+            if (postData?.isDisliked as Boolean) R.color.colorAccent else R.color.colorPrimaryDark
+        )
+        _dislikeCount.setTextColor(dislikeColor)
+        _dislikeImage.setColorFilter(dislikeColor)
     }
 
     private fun setImage(image: Bitmap?) {
@@ -87,5 +126,11 @@ class PostView(context: Context) : LinearLayout(context) {
         _likeCount.text = likes.toString()
         _dislikeCount.text = dislikes.toString()
     }
+
+//    override fun onDetachedFromWindow() {
+//        postData?.removeSubscriber(this)
+//        Log.d(_tag, "detached")
+//        super.onDetachedFromWindow()
+//    }
 
 }
