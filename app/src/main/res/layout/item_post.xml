@@ -30,29 +30,49 @@
             tools:ignore="UseCompoundDrawables"
             android:background="@color/background">
 
-        <Button
+        <LinearLayout
                 android:id="@+id/like_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/background"
-                android:text=""
-                android:textColor="@color/colorPrimaryDark"
-                android:drawableLeft="@drawable/ic_like"
-                android:drawablePadding="-15dp"
-                tools:ignore="ButtonStyle,RtlHardcoded"
-                style="?android:attr/borderlessButtonStyle"/>
+                android:gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                tools:ignore="RtlHardcoded">
+            <ImageView
+                    android:id="@+id/like_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_like"
+                    android:tint="@color/colorPrimaryDark"
+                    android:contentDescription="@string/description_like"/>
+            <TextView
+                    android:id="@+id/like_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/colorPrimaryDark"/>
+        </LinearLayout>
 
-        <Button
+        <LinearLayout
                 android:id="@+id/dislike_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/background"
-                android:text=""
-                android:textColor="@color/colorPrimaryDark"
-                android:drawableLeft="@drawable/ic_like"
-                android:drawablePadding="-15dp"
-                tools:ignore="ButtonStyle,RtlHardcoded"
-                style="?android:attr/borderlessButtonStyle"/>
+                android:gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                tools:ignore="RtlHardcoded">
+            <ImageView
+                    android:id="@+id/dislike_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_like"
+                    android:tint="@color/colorPrimaryDark"
+                    android:contentDescription="@string/description_like"/>
+            <TextView
+                    android:id="@+id/dislike_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/colorPrimaryDark"/>
+        </LinearLayout>
 
     </LinearLayout>
 </merge>
