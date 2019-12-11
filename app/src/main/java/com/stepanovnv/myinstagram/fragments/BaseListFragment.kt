@@ -76,7 +76,7 @@ abstract class BaseListFragment : Fragment() {
     private fun reloadPostData() {
         val size = postsArray.size
         postsArray.clear()
-        _adapter.notifyItemRangeRemoved(0, size)
+        _adapter.myNotifyItemRangeRemoved(0, size)
         loadPostData()
     }
 
@@ -130,7 +130,7 @@ abstract class BaseListFragment : Fragment() {
                 Log.e(TAG, e.toString())
             }
         }
-        _adapter.notifyItemRangeInserted(sizeBefore, postsArray.size - sizeBefore)
+        _adapter.myNotifyItemRangeInserted(sizeBefore, postsArray.size - sizeBefore)
     }
 
 }
