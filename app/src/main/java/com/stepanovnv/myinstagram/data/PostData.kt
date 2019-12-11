@@ -1,15 +1,18 @@
 package com.stepanovnv.myinstagram.data
 
 import android.content.Context
+import android.util.Log
+import com.stepanovnv.myinstagram.http.HttpClient
+import com.stepanovnv.myinstagram.http.requests.LikesRequest
 import org.json.JSONObject
 
 
 class PostData(
-    applicationContext: Context,
+    private val applicationContext: Context,
     val id: Int,
     val url:String,
-    likes: Int,
-    dislikes: Int
+    var likes: Int,
+    var dislikes: Int
 ) {
     companion object {
         fun fromJson(applicationContext: Context, json: JSONObject): PostData {
@@ -21,87 +24,62 @@ class PostData(
         }
     }
 
-    var likes = likes
-//        get() = if (isLiked && field == 0) 1 else field
-
-    var dislikes = dislikes
-//        get() = if (isDisliked && field == 0) 1 else field
-
-    var isLiked = false
-        set(value) {
-            if (field == value) return
-            field = value
-            if (value) {
-                likeStatus = "like"
-                isDisliked = false
-                ++likes
-            } else {
-                if (likeStatus == "like")
-                    likeStatus = "none"
-                --likes
-            }
-        }
-        get() = _postDao.getLikeStatus(id) == "like"
-
-    var isDisliked = false
-        set(value) {
-            if (field == value) return
-            field = value
-            if (value) {
-                likeStatus = "dislike"
-                isLiked = false
-                ++dislikes
-            } else {
-                if (likeStatus == "dislike")
-                    likeStatus = "none"
-                --dislikes
-            }
-        }
-        get() = _postDao.getLikeStatus(id) == "dislike"
-
-    private var likeStatus: String = "none"
-        set(value) {
-            if (field == value) return
-            field = value
-            _postDao.changeLikeStatus(id, value)
-        }
-
-
+    private val _tag = "PostData_%d".format(id)
     private val _postDao = PostDatabaseSingleton.getInstance(applicationContext).db.postDao()
+    private val _httpClient = HttpClient(_tag, applicationContext)
+
     init {
         if (_postDao.getItemById(id) == null) {
             _postDao.insert(Post(id))
         }
-        likeStatus = _postDao.getLikeStatus(id)
-        isLiked = (likeStatus == "like")
-        isDisliked = (likeStatus == "dislike")
     }
 
+    fun isLiked(): Boolean {
+        return _postDao.getLikeStatus(id) == "like"
+    }
 
-//    interface PostDataListener {
-//        fun onPostDataIsLikedChanged(isLiked: Boolean)
-//        fun onPostDataLikesChanged(likes: Int)
-//        fun onPostDataIsDislikedChanged(isLiked: Boolean)
-//        fun onPostDataDislikesChanged(likes: Int)
-//    }
-//
-//    private val _subscribers = ArrayList<PostDataListener>()
-//
-//    fun addSubscriber(listener: PostDataListener) {
-//        _subscribers.add(listener)
-//    }
-//
-//    fun removeSubscriber(listener: PostDataListener) {
-//        var i = 0
-//        val dSizeBefore = _subscribers.size
-//        while (i < _subscribers.size) {
-//            if (_subscribers[i] == listener)
-//                _subscribers.removeAt(i)
-//            else
-//                ++i
-//        }
-//        Log.d("removeSubscriber", "%d -> %d".format(dSizeBefore, _subscribers.size))
-//    }
+    fun isDisliked(): Boolean {
+        return _postDao.getLikeStatus(id) == "dislike"
+    }
+
+    fun setLiked(value: Boolean) {
+        val isDisliked = isDisliked()
+
+        _httpClient.addRequest(LikesRequest(
+            applicationContext,
+            1,
+            if (isDisliked) -1 else 0,
+            { response -> Log.d(_tag, "Like response is ok: %s".format(response.toString())) },
+            { error -> Log.e(_tag, "Like response failed: %s".format(error)) }
+        ))
+
+        _postDao.changeLikeStatus(id, if (value) "like" else "none")
+        if (value) {
+            ++likes
+            if (isDisliked && dislikes > 0) --dislikes
+        } else if (likes > 0)
+            --likes
+    }
+
+    fun setDisliked(value: Boolean) {
+        val isLiked = isLiked()
+
+        _httpClient.addRequest(LikesRequest(
+            applicationContext,
+            if (isLiked) -1 else 0,
+            1,
+            { response -> Log.d(_tag, "Dislike response is ok: %s".format(response.toString())) },
+            { error -> Log.e(_tag, "Dislike response failed: %s".format(error)) }
+        ))
+
+        _postDao.changeLikeStatus(id, if (value) "dislike" else "none")
+        if (value) {
+            ++dislikes
+            if (isLiked && likes > 0) --likes
+        } else if (dislikes > 0)
+            --dislikes
+    }
+
 
     override fun equals(other: Any?): Boolean {
         return other.hashCode() == hashCode()

@@ -76,12 +76,12 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
         _dislikeButton = findViewById(R.id.dislike_button)
 
         _likeButton.setOnClickListener {
-            postData?.isLiked = ! postData!!.isLiked
+            postData?.setLiked( ! postData!!.isLiked() )
             updateLikes()
         }
 
         _dislikeButton.setOnClickListener {
-            postData?.isDisliked = ! postData!!.isDisliked
+            postData?.setDisliked( ! postData!!.isDisliked() )
             updateLikes()
         }
     }
@@ -92,22 +92,29 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
     }
 
     private fun updateLikes() {
-        _likeCount.text = postData?.likes.toString()
-        _dislikeCount.text = postData?.dislikes.toString()
+        val isLiked = postData!!.isLiked()
+        val isDisliked = postData!!.isDisliked()
 
         val likeColor = ContextCompat.getColor(
             context,
-            if (postData?.isLiked as Boolean) R.color.colorAccent else R.color.colorPrimaryDark
+            if (isLiked) R.color.colorAccent else R.color.colorPrimaryDark
         )
-        _likeCount.setTextColor(likeColor)
-        _likeImage.setColorFilter(likeColor)
-
         val dislikeColor = ContextCompat.getColor(
             context,
-            if (postData?.isDisliked as Boolean) R.color.colorAccent else R.color.colorPrimaryDark
+            if (isDisliked) R.color.colorAccent else R.color.colorPrimaryDark
         )
+
+        _likeCount.setTextColor(likeColor)
+        _likeImage.setColorFilter(likeColor)
         _dislikeCount.setTextColor(dislikeColor)
         _dislikeImage.setColorFilter(dislikeColor)
+
+        var likesCount = postData!!.likes
+        if (isLiked && likesCount == 0) likesCount = 1
+        var dislikesCount = postData!!.dislikes
+        if (isDisliked && dislikesCount == 0) dislikesCount = 1
+        _likeCount.text = likesCount.toString()
+        _dislikeCount.text = dislikesCount.toString()
     }
 
     private fun setImage(image: Bitmap?) {
