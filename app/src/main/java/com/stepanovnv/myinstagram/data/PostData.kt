@@ -47,6 +47,7 @@ class PostData(
 
         _httpClient.addRequest(LikesRequest(
             applicationContext,
+            id,
             1,
             if (isDisliked) -1 else 0,
             { response -> Log.d(_tag, "Like response is ok: %s".format(response.toString())) },
@@ -66,6 +67,7 @@ class PostData(
 
         _httpClient.addRequest(LikesRequest(
             applicationContext,
+            id,
             if (isLiked) -1 else 0,
             1,
             { response -> Log.d(_tag, "Dislike response is ok: %s".format(response.toString())) },

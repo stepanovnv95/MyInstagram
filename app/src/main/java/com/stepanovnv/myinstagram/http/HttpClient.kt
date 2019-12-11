@@ -33,7 +33,7 @@ class HttpClient(tag: String, context: Context) {
                 try {
                     request.onResponse?.invoke(JSONObject(response))
                 } catch (e: JSONException) {
-                    request.onError?.invoke(e.toString())
+                    request.onError?.invoke("Can't parse to json: %s".format(response.toString()))
                 }
             },
             Response.ErrorListener { error ->

@@ -7,6 +7,7 @@ import org.json.JSONObject
 
 class LikesRequest(
     appContext: Context?,
+    private val id: Int,
     private val like: Int,
     private val dislike: Int,
     onResponse: ((JSONObject) -> Unit)?,
@@ -20,6 +21,7 @@ class LikesRequest(
                 throw  Exception("Like and dislike should has integer value in range [-1;1]")
             }
             val p = HashMap<String, String>()
+            p["id"] = id.toString()
             if (like != 0)
                 p["like"] = like.toString()
             if (dislike != 0)
