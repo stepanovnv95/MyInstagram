@@ -4,6 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.stepanovnv.myinstagram.R
 
 
@@ -15,6 +18,16 @@ class AdmobView(context: Context) : FrameLayout(context) {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        MobileAds.initialize(context) {}
+        val adView = findViewById<AdView>(R.id.adView)
+        val adRequest = AdRequest.Builder()
+            .addTestDevice("6D26308B5DC0746B63DE049190F1665A")
+            .build()
+        adView.loadAd(adRequest)
     }
 
 }
