@@ -2,6 +2,18 @@
     <string name="app_name">My Instagram</string>
     <string name="refresh">There was a network error, swipe down to update</string>
 
+    <!-- TITLES -->
+    <string name="title_home">Home</string>
+    <string name="title_hot">Hot</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_other">Other</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_about">About</string>
+
+    <string name="profile">Profile</string>
+    <string name="rate_app">Rate this App</string>
+    <string name="about">About</string>
+
     <!-- URLS -->
     <string name="url_home">"https://reactor.pbip.ru/nikita4you/scripts/get_all_post.php"</string>
     <string name="url_like">"https://reactor.pbip.ru/nikita4you/scripts/set_like_dislike.php"</string>

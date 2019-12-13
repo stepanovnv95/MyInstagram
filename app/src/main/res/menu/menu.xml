@@ -10,7 +10,7 @@
     <item android:id="@+id/action_favorites"
           android:title=""
           android:icon="@drawable/ic_home"/>
-    <item android:id="@+id/action_more"
+    <item android:id="@+id/action_other"
           android:title=""
-          android:icon="@drawable/ic_home"/>
+          android:icon="@drawable/ic_more"/>
 </menu>
