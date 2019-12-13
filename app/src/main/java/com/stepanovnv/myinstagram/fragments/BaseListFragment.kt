@@ -2,6 +2,8 @@ package com.stepanovnv.myinstagram.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Html
+import android.text.Spanned
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -43,7 +45,7 @@ abstract class BaseListFragment : Fragment() {
         _appContext = activity!!.applicationContext
 
         val view = inflater.inflate(R.layout.fragment_base_list, container, false)
-        activity!!.title = getTitle()
+        activity!!.title = createTitle()
 
         _refreshView = view.findViewById(R.id.refresh)
         _emptyHintView = view.findViewById(R.id.empty)
@@ -71,6 +73,18 @@ abstract class BaseListFragment : Fragment() {
             onLoadingFinished()
 
         return view
+    }
+
+    private fun createTitle(): Spanned {
+        val intColor = ContextCompat.getColor(context!!, R.color.colorAccent)
+        val hexColor = "#%06X".format(0xFFFFFF and intColor)
+        val titleHtml = "<font color=%s>%s</font>"
+            .format(
+                hexColor,
+                getTitle()
+            )
+        @Suppress("DEPRECATION")
+        return Html.fromHtml(titleHtml)
     }
 
     protected abstract fun constructHttpRequest(): PostRequest
