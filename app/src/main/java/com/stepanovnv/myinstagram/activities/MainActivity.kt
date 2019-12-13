@@ -18,6 +18,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var _hotFragment: Fragment
     private lateinit var _otherFragment: Fragment
 
+    companion object {
+        private var lastFragment: Fragment? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,8 +31,11 @@ class MainActivity : AppCompatActivity() {
         _hotFragment = HotFragment()
         _otherFragment = OtherFragment()
 
+        if (lastFragment == null)
+            lastFragment = _homeFragment
+
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, _homeFragment)
+        transaction.replace(R.id.fragment_container, lastFragment!!)
         transaction.commit()
 
         _menu.setOnNavigationItemSelectedListener { menuItem -> onMenuSelected(menuItem) }
@@ -42,6 +49,7 @@ class MainActivity : AppCompatActivity() {
             else -> null
         }
         fragment ?: return false
+        lastFragment = fragment
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
