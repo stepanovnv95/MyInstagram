@@ -15,13 +15,27 @@
             tools:ignore="GoogleAppIndexingWarning"> <!-- TODO("What does it want?") -->
         <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value=""/>
+                android:value="ca-app-pub-9063555831488651~9511895845"/>
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+                android:name=".activities.AboutActivity"
+                android:label="@string/title_about">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+                android:name=".activities.ProfileActivity"
+                android:label="@string/title_profile">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity" />
         </activity>
     </application>
 

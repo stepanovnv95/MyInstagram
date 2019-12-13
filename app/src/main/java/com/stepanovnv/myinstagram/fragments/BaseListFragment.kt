@@ -43,6 +43,8 @@ abstract class BaseListFragment : Fragment() {
         _appContext = activity!!.applicationContext
 
         val view = inflater.inflate(R.layout.fragment_base_list, container, false)
+        activity!!.title = getTitle()
+
         _refreshView = view.findViewById(R.id.refresh)
         _emptyHintView = view.findViewById(R.id.empty)
         if (_listView == null) {
@@ -72,6 +74,7 @@ abstract class BaseListFragment : Fragment() {
     }
 
     protected abstract fun constructHttpRequest(): PostRequest
+    protected abstract fun getTitle(): String
 
     private fun reloadPostData() {
         val size = postsArray.size

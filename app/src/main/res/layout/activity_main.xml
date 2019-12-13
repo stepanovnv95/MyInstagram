@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/menu"
-            android:background="@color/colorPrimary"
+            android:background="@color/background"
             app:itemIconTint="@color/button_color_selector">
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

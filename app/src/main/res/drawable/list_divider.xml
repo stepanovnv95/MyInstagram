@@ -3,5 +3,5 @@
        android:shape="line">
     <size
             android:width="1px"
-            android:height="16dp"/>
+            android:height="8dp"/>
 </shape>
