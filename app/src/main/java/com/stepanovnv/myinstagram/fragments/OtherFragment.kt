@@ -1,6 +1,7 @@
 package com.stepanovnv.myinstagram.fragments
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
@@ -53,7 +54,8 @@ class OtherFragment : Fragment() {
     }
 
     private fun onRateButtonClicked() {
-
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_rate)))
+        startActivity(browserIntent)
     }
 
     private fun onAboutButtonClicked() {

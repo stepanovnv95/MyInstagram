@@ -18,6 +18,8 @@
     <string name="url_home">"https://reactor.pbip.ru/nikita4you/scripts/get_all_post.php"</string>
     <string name="url_like">"https://reactor.pbip.ru/nikita4you/scripts/set_like_dislike.php"</string>
 
+    <string name="url_rate">https://www.youtube.com/watch?v=dQw4w9WgXcQ</string>
+
     <!-- CONTENT DESCRIPTIONS -->
     <string name="description_arrow_down">Arrow down</string>
     <string name="description_post_image">Post image</string>
