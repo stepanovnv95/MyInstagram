@@ -16,7 +16,9 @@
         <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
                 android:value="ca-app-pub-9063555831488651~9511895845"/>
-        <activity android:name=".activities.MainActivity">
+        <activity
+                android:name=".activities.MainActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -24,14 +26,16 @@
         </activity>
         <activity
                 android:name=".activities.AboutActivity"
-                android:label="@string/title_about">
+                android:label="@string/title_about"
+                android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".activities.MainActivity" />
         </activity>
         <activity
                 android:name=".activities.ProfileActivity"
-                android:label="@string/title_profile">
+                android:label="@string/title_profile"
+                android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".activities.MainActivity" />

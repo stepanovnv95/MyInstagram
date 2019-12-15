@@ -26,5 +26,8 @@
     <string name="description_like">Like</string>
 
     <!-- TEXT -->
+    <string name="login">Log in to the application</string>
+    <string name="logout">Log out</string>
+    <string name="save">Save</string>
     <string name="about_p1">Бла бла бла бла бла</string>
 </resources>
