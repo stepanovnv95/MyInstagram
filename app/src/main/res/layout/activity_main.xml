@@ -15,7 +15,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/menu"
             android:background="@color/background"
-            app:itemIconTint="@color/button_color_selector">
+            app:itemIconTint="@color/button_color_selector"
+            app:itemHorizontalTranslationEnabled="false"
+            app:labelVisibilityMode="unlabeled">
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <FrameLayout
