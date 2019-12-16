@@ -14,8 +14,8 @@ data class UserMeta(
 @Dao
 interface UserDao {
 
-    @Query("SELECT value FROM usermeta WHERE meta_key=:meta_key LIMIT 1")
-    fun getKey(meta_key: String): String
+    @Query("SELECT * FROM usermeta WHERE meta_key=:meta_key LIMIT 1")
+    fun getKey(meta_key: String): UserMeta?
 
     @Insert
     fun insert(vararg userMeta: UserMeta)

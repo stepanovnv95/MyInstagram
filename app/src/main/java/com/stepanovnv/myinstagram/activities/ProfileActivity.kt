@@ -17,6 +17,9 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.stepanovnv.myinstagram.R
+import com.stepanovnv.myinstagram.data.MyInstagramDatabaseSingleton
+import com.stepanovnv.myinstagram.data.UserDao
+import com.stepanovnv.myinstagram.data.UserMeta
 
 
 @Suppress("PrivatePropertyName")
@@ -30,18 +33,22 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var _signInButton: SignInButton
     private lateinit var _googleSignInClient: GoogleSignInClient
     private lateinit var _saveButton: Button
-    private lateinit var _username: TextView
+    private lateinit var _usernameInput: TextView
+
+    private lateinit var _userDao: UserDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+
+        _userDao = MyInstagramDatabaseSingleton.getInstance(applicationContext).db.userDao()
 
         _loginUi = findViewById(R.id.login_ui)
         _profileUi = findViewById(R.id.profile_ui)
         _logoutButton = findViewById(R.id.logout_button)
         _signInButton = findViewById(R.id.sign_in_button)
         _saveButton = findViewById(R.id.save_button)
-        _username = findViewById(R.id.username)
+        _usernameInput = findViewById(R.id.username)
 
         _saveButton.background.colorFilter = LightingColorFilter(
             0x000000,
@@ -50,6 +57,11 @@ class ProfileActivity : AppCompatActivity() {
 
         _signInButton.setOnClickListener { onSingButtonClick() }
         _logoutButton.setOnClickListener { onLogoutClick() }
+        _saveButton.setOnClickListener {
+            val newUsername = _usernameInput.text.toString()
+            if (newUsername != "")
+                updateUsername(newUsername)
+        }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
@@ -58,6 +70,10 @@ class ProfileActivity : AppCompatActivity() {
 
         val account = GoogleSignIn.getLastSignedInAccount(this)
         updateUI(account)
+        if (!isSigned())
+            updateUsername(account?.displayName)
+        else
+            _usernameInput.text = _userDao.getKey("username")?.value
     }
 
     private fun updateUI(account: GoogleSignInAccount?) {
@@ -68,7 +84,19 @@ class ProfileActivity : AppCompatActivity() {
             _loginUi.visibility = View.VISIBLE
             _profileUi.visibility = View.GONE
         }
-        _username.text = if (account != null) account.displayName else ""
+    }
+
+    private fun isSigned(): Boolean {
+        val username = _userDao.getKey("username")?.value
+        return !(username == null || username == "")
+    }
+
+    private fun updateUsername(username: String?) {
+        if (_userDao.getKey("username") == null)
+            _userDao.insert(UserMeta(0, "username", ""))
+        _userDao.updateKey("username", username ?: "")
+
+        _usernameInput.text = _userDao.getKey("username")?.value ?: ""
     }
 
     private fun onSingButtonClick() {
@@ -79,6 +107,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun onLogoutClick() {
         _googleSignInClient.signOut()
         updateUI(null)
+        updateUsername(null)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -94,9 +123,11 @@ class ProfileActivity : AppCompatActivity() {
         try {
             val account = task!!.getResult(ApiException::class.java)
             updateUI(account)
+            updateUsername(account?.displayName)
         } catch (e: ApiException) {
             Log.w(TAG, "signInResult:failed code = %s".format(e.statusCode))
             updateUI(null)
+            updateUsername(null)
         }
     }
 
