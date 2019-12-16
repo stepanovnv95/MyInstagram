@@ -2,8 +2,6 @@ package com.stepanovnv.myinstagram.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Html
-import android.text.Spanned
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +33,8 @@ abstract class BaseListFragment : Fragment() {
     private lateinit var _httpClient: HttpClient
     private var _loading = false
 
+    private var _view: View? = null
+
     // widgets
     private lateinit var _refreshView: SwipeRefreshLayout
     private var _listView: RecyclerView? = null
@@ -42,19 +42,23 @@ abstract class BaseListFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        if (_view != null)
+            return _view
+
         _appContext = activity!!.applicationContext
 
-        val view = inflater.inflate(R.layout.fragment_base_list, container, false)
+        _view = inflater.inflate(R.layout.fragment_base_list, container, false)
         activity!!.title = getTitle()
 
-        _refreshView = view.findViewById(R.id.refresh)
-        _emptyHintView = view.findViewById(R.id.empty)
+        _refreshView = _view!!.findViewById(R.id.refresh)
+        _emptyHintView = _view!!.findViewById(R.id.empty)
         if (_listView == null) {
             _adapter.setHasStableIds(true)
         } else {
             _listView!!.adapter = null
         }
-        _listView = view.findViewById<RecyclerView>(R.id.list).apply {
+        _listView = _view!!.findViewById<RecyclerView>(R.id.list).apply {
             layoutManager = LinearLayoutManager(context)
             adapter = _adapter
         }
@@ -72,7 +76,7 @@ abstract class BaseListFragment : Fragment() {
         else
             onLoadingFinished()
 
-        return view
+        return _view
     }
 
     protected abstract fun constructHttpRequest(): PostRequest

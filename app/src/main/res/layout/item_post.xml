@@ -74,5 +74,20 @@
                     android:textColor="@color/colorPrimaryDark"/>
         </LinearLayout>
 
+        <LinearLayout
+                android:id="@+id/comments_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                tools:ignore="RtlHardcoded">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_comments"
+                    android:tint="@color/colorPrimaryDark"
+                    android:contentDescription="@string/description_like"/>
+        </LinearLayout>
+
     </LinearLayout>
 </merge>

@@ -1,6 +1,7 @@
 package com.stepanovnv.myinstagram.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var _homeFragment: Fragment
     private lateinit var _hotFragment: Fragment
     private lateinit var _otherFragment: Fragment
+    private var _isFragmentsInit: Boolean = false
 
     companion object {
         private var lastSelectedItemId: Int? = null
@@ -24,6 +26,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (_isFragmentsInit)
+            return
+        else
+            _isFragmentsInit = true
+
         setContentView(R.layout.activity_main)
 
         _menu = findViewById(R.id.bottom_nav_view)
@@ -52,4 +60,5 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
         return true
     }
+
 }

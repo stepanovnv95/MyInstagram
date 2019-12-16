@@ -1,6 +1,8 @@
 package com.stepanovnv.myinstagram.views
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -13,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.stepanovnv.myinstagram.R
+import com.stepanovnv.myinstagram.activities.CommentsActivity
 import com.stepanovnv.myinstagram.data.PostData
 import com.stepanovnv.myinstagram.http.HttpClient
 import com.stepanovnv.myinstagram.http.requests.ImageRequest
@@ -31,6 +34,7 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
     private val _dislikeButton: View
     private val _dislikeImage: ImageView
     private val _dislikeCount: TextView
+    private val _commentsButton: View
 
     var postData: PostData? = null
         set(value) {
@@ -74,6 +78,7 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
         _dislikeImage = findViewById(R.id.dislike_image)
         _dislikeCount = findViewById(R.id.dislike_text)
         _dislikeButton = findViewById(R.id.dislike_button)
+        _commentsButton = findViewById(R.id.comments_button)
 
         _likeButton.setOnClickListener {
             postData?.setLiked( ! postData!!.isLiked() )
@@ -83,6 +88,10 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
         _dislikeButton.setOnClickListener {
             postData?.setDisliked( ! postData!!.isDisliked() )
             updateLikes()
+        }
+
+        _commentsButton.setOnClickListener {
+            openComments()
         }
     }
 
@@ -134,10 +143,9 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
         _dislikeCount.text = dislikes.toString()
     }
 
-//    override fun onDetachedFromWindow() {
-//        postData?.removeSubscriber(this)
-//        Log.d(_tag, "detached")
-//        super.onDetachedFromWindow()
-//    }
+    private fun openComments() {
+        val intent = Intent(context as Activity, CommentsActivity::class.java)
+        context.startActivity(intent)
+    }
 
 }

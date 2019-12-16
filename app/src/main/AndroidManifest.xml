@@ -18,7 +18,8 @@
                 android:value="ca-app-pub-9063555831488651~9511895845"/>
         <activity
                 android:name=".activities.MainActivity"
-                android:screenOrientation="portrait">
+                android:screenOrientation="portrait"
+                android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -35,6 +36,14 @@
         <activity
                 android:name=".activities.ProfileActivity"
                 android:label="@string/title_profile"
+                android:screenOrientation="portrait">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+                android:name=".activities.CommentsActivity"
+                android:label="@string/title_comments"
                 android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
