@@ -1,6 +1,7 @@
 package com.stepanovnv.myinstagram.http.requests
 
 import android.content.Context
+import android.util.Log
 import com.stepanovnv.myinstagram.R
 import org.json.JSONObject
 
@@ -26,6 +27,7 @@ class LikesRequest(
                 p["like"] = like.toString()
             if (dislike != 0)
                 p["dislike"] = dislike.toString()
+            Log.d("LikesRequest", p.toString())
             return p
         }
 }
