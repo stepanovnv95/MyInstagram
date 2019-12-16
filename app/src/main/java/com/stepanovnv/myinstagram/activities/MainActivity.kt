@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var _otherFragment: Fragment
 
     companion object {
-        private var lastFragment: Fragment? = null
+        private var lastSelectedItemId: Int? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,14 +31,11 @@ class MainActivity : AppCompatActivity() {
         _hotFragment = HotFragment()
         _otherFragment = OtherFragment()
 
-        if (lastFragment == null)
-            lastFragment = _homeFragment
-
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, lastFragment!!)
-        transaction.commit()
+        if (lastSelectedItemId == null)
+            lastSelectedItemId = R.id.action_home
 
         _menu.setOnNavigationItemSelectedListener { menuItem -> onMenuSelected(menuItem) }
+        _menu.selectedItemId = lastSelectedItemId!!
     }
 
     private fun onMenuSelected(menuItem: MenuItem): Boolean {
@@ -49,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             else -> null
         }
         fragment ?: return false
-        lastFragment = fragment
+        lastSelectedItemId = menuItem.itemId
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
