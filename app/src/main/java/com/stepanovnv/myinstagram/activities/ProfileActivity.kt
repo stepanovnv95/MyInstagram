@@ -108,6 +108,9 @@ class ProfileActivity : AppCompatActivity() {
         _googleSignInClient.signOut()
         updateUI(null)
         updateUsername(null)
+        if (_userDao.getKey("user_id") == null)
+            _userDao.insert(UserMeta(1, "user_id", ""))
+        _userDao.updateKey("user_id", "")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -123,7 +126,10 @@ class ProfileActivity : AppCompatActivity() {
         try {
             val account = task!!.getResult(ApiException::class.java)
             updateUI(account)
-            updateUsername(account?.displayName)
+            updateUsername(account!!.displayName)
+            if (_userDao.getKey("user_id") == null)
+                _userDao.insert(UserMeta(1, "user_id", ""))
+            _userDao.updateKey("user_id", account.id.toString())
         } catch (e: ApiException) {
             Log.w(TAG, "signInResult:failed code = %s".format(e.statusCode))
             updateUI(null)
