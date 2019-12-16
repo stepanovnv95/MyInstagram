@@ -25,7 +25,7 @@ class PostData(
     }
 
     private val _tag = "PostData_%d".format(id)
-    private val _postDao = PostDatabaseSingleton.getInstance(applicationContext).db.postDao()
+    private val _postDao = MyInstagramDatabaseSingleton.getInstance(applicationContext).db.postDao()
     private val _httpClient = HttpClient(_tag, applicationContext)
 
     init {
