@@ -14,7 +14,7 @@ class PostListAdapter(private val _dataset: Collection<PostData>)
 
     class PostViewHolder(val view: PostView) : RecyclerView.ViewHolder(view)
     class AdmobViewHolder(view: AdmobView) : RecyclerView.ViewHolder(view)
-    private val _postsForAd = 6
+    private val _postsForAd = 12
 
     var onEndScrolled: (() -> Unit)? = null
 
@@ -32,9 +32,7 @@ class PostListAdapter(private val _dataset: Collection<PostData>)
         val i = adapterIndexToArray(position)
         if (holder is PostViewHolder) {
             holder.view.postData = _dataset.elementAt(i)
-        } /*else if (holder is AdmobViewHolder) {
-
-        }*/
+        }
         if (position == itemCount - 1)
             onEndScrolled?.invoke()
     }

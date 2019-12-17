@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.LightingColorFilter
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -135,6 +136,14 @@ class ProfileActivity : AppCompatActivity() {
             updateUI(null)
             updateUsername(null)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

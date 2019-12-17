@@ -6,11 +6,10 @@ import com.android.volley.Response
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.StringRequest
 import com.stepanovnv.myinstagram.http.requests.AbstractRequest
-import com.stepanovnv.myinstagram.http.requests.ImageRequest as MyImageRequest
 import com.stepanovnv.myinstagram.http.requests.PostRequest
 import org.json.JSONException
 import org.json.JSONObject
-import java.lang.Exception
+import com.stepanovnv.myinstagram.http.requests.ImageRequest as MyImageRequest
 
 
 class HttpClient(tag: String, context: Context) {

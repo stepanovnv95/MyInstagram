@@ -145,6 +145,7 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
 
     private fun openComments() {
         val intent = Intent(context as Activity, CommentsActivity::class.java)
+        intent.putExtra("POST_ID", postData!!.id)
         context.startActivity(intent)
     }
 
