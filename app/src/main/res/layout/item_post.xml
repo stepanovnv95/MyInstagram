@@ -87,6 +87,12 @@
                     android:src="@drawable/ic_comments"
                     android:tint="@color/colorPrimaryDark"
                     android:contentDescription="@string/description_like"/>
+            <TextView
+                    android:id="@+id/comments_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/colorPrimaryDark"/>
         </LinearLayout>
 
     </LinearLayout>

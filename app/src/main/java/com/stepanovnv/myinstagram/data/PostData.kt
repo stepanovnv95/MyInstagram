@@ -12,7 +12,8 @@ class PostData(
     val id: Int,
     val url:String,
     var likes: Int,
-    var dislikes: Int
+    var dislikes: Int,
+    var comments: Int
 ) {
     companion object {
         fun fromJson(applicationContext: Context, json: JSONObject): PostData {
@@ -20,7 +21,8 @@ class PostData(
             val url = json.getString("image_url")
             val likes = json.getInt("likes")
             val dislikes = json.getInt("dislikes")
-            return PostData(applicationContext, id, url, likes, dislikes)
+            val comments = json.getInt("comments")
+            return PostData(applicationContext, id, url, likes, dislikes, comments)
         }
     }
 

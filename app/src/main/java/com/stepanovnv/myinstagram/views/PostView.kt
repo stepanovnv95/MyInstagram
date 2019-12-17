@@ -35,6 +35,7 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
     private val _dislikeImage: ImageView
     private val _dislikeCount: TextView
     private val _commentsButton: View
+    private val _commentsCount: TextView
 
     var postData: PostData? = null
         set(value) {
@@ -79,6 +80,7 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
         _dislikeCount = findViewById(R.id.dislike_text)
         _dislikeButton = findViewById(R.id.dislike_button)
         _commentsButton = findViewById(R.id.comments_button)
+        _commentsCount = findViewById(R.id.comments_text)
 
         _likeButton.setOnClickListener {
             postData?.setLiked( ! postData!!.isLiked() )
@@ -98,6 +100,7 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         updateLikes()
+        _commentsCount.text = postData!!.comments.toString()
     }
 
     private fun updateLikes() {
