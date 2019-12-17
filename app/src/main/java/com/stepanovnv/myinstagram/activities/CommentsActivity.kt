@@ -18,9 +18,6 @@ import com.stepanovnv.myinstagram.http.HttpClient
 import com.stepanovnv.myinstagram.http.requests.AddCommentRequest
 import com.stepanovnv.myinstagram.http.requests.GetCommentsRequest
 import org.json.JSONObject
-import java.lang.Exception
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 @Suppress("PrivatePropertyName")
@@ -101,12 +98,12 @@ class CommentsActivity : AppCompatActivity() {
             userId,
             userName,
             _commentText,
-            { response -> onCommentAdded(response) },
+            { onCommentAdded(/*response*/) },
             { error -> onAddCommentError(error) }
         ))
     }
 
-    private fun onCommentAdded(jsonObject: JSONObject) {
+    private fun onCommentAdded(/*jsonObject: JSONObject*/) {
         val myComment = Comment(
             _userDao.getKey("username")!!.value,
             _commentText,
