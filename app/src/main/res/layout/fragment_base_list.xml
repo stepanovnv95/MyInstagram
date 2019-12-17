@@ -33,6 +33,7 @@
                     android:contentDescription="@string/description_arrow_down"
                     android:tint="@color/colorPrimaryDark"/>
             <TextView
+                    android:id="@+id/empty_hint"
                     android:text="@string/refresh"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

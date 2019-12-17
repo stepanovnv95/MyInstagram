@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">My Instagram</string>
     <string name="refresh">There was a network error, swipe down to update</string>
+    <string name="favorites_refresh">Maybe you have not added an any post to your favorites</string>
 
     <!-- TITLES -->
     <string name="title_home">Home</string>

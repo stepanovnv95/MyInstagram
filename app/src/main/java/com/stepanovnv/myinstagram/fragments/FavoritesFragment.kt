@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.stepanovnv.myinstagram.R
 import com.stepanovnv.myinstagram.data.FavoritesDao
 import com.stepanovnv.myinstagram.data.MyInstagramDatabaseSingleton
@@ -19,7 +20,9 @@ class FavoritesFragment : BaseListFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _favoritesDao = MyInstagramDatabaseSingleton.getInstance(activity!!.applicationContext).db.favoritesDao()
-        return super.onCreateView(inflater, container, savedInstanceState)
+        val view = super.onCreateView(inflater, container, savedInstanceState)
+        view!!.findViewById<TextView>(R.id.empty_hint).text = getString(R.string.favorites_refresh)
+        return view
     }
 
     override fun constructHttpRequest(): PostRequest {
