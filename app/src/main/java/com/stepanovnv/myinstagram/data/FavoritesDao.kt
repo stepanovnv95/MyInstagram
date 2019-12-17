@@ -18,6 +18,9 @@ interface FavoritesDao {
     @Query("SELECT * FROM favorites ORDER BY date")
     fun getFavorites(): List<Favorites>
 
+    @Query("SELECT * FROM favorites WHERE post_id=:post_id LIMIT 1")
+    fun checkFavorite(post_id: Int): Favorites?
+
     @Delete
     fun delete(favorites: Favorites)
 }

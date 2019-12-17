@@ -28,12 +28,25 @@ class PostData(
 
     private val _tag = "PostData_%d".format(id)
     private val _postDao = MyInstagramDatabaseSingleton.getInstance(applicationContext).db.postDao()
+    private val _favoritesDao = MyInstagramDatabaseSingleton.getInstance(applicationContext).db.favoritesDao()
     private val _httpClient = HttpClient(_tag, applicationContext)
 
     init {
         if (_postDao.getItemById(id) == null) {
             _postDao.insert(Post(id))
         }
+    }
+
+    fun isFavorited(): Boolean {
+        val f = _favoritesDao.checkFavorite(id)
+        return (f != null)
+    }
+
+    fun setFavorited(favorite: Boolean) {
+        if (favorite)
+            _favoritesDao.insert(Favorites(id, ""))
+        else
+            _favoritesDao.delete(Favorites(id, ""))
     }
 
     fun isLiked(): Boolean {

@@ -36,6 +36,8 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
     private val _dislikeCount: TextView
     private val _commentsButton: View
     private val _commentsCount: TextView
+    private val _favoriteButton: View
+    private val _favoriteImage: ImageView
 
     var postData: PostData? = null
         set(value) {
@@ -81,6 +83,8 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
         _dislikeButton = findViewById(R.id.dislike_button)
         _commentsButton = findViewById(R.id.comments_button)
         _commentsCount = findViewById(R.id.comments_text)
+        _favoriteButton = findViewById(R.id.favorite_button)
+        _favoriteImage = findViewById(R.id.favorite_image)
 
         _likeButton.setOnClickListener {
             postData?.setLiked( ! postData!!.isLiked() )
@@ -95,11 +99,17 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
         _commentsButton.setOnClickListener {
             openComments()
         }
+
+        _favoriteButton.setOnClickListener {
+            postData?.setFavorited( ! postData!!.isFavorited() )
+            updateFavorite()
+        }
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         updateLikes()
+        updateFavorite()
         _commentsCount.text = postData!!.comments.toString()
     }
 
@@ -127,6 +137,15 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
         if (isDisliked && dislikesCount == 0) dislikesCount = 1
         _likeCount.text = likesCount.toString()
         _dislikeCount.text = dislikesCount.toString()
+    }
+
+    private fun updateFavorite() {
+        val isFavorited = postData!!.isFavorited()
+        val color = ContextCompat.getColor(
+            context,
+            if (isFavorited) R.color.colorAccent else R.color.colorPrimaryDark
+        )
+        _favoriteImage.setColorFilter(color)
     }
 
     private fun setImage(image: Bitmap?) {
