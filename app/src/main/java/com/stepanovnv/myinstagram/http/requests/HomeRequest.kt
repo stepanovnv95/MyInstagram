@@ -5,7 +5,7 @@ import com.stepanovnv.myinstagram.R
 import org.json.JSONObject
 
 
-class HomeRequest(
+open class HomeRequest(
     context: Context?,
     private val _lastId: Int? = null,
     onResponse: ((JSONObject) -> Unit)? = null,

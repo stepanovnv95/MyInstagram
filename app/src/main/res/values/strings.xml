@@ -18,6 +18,7 @@
 
     <!-- URLS -->
     <string name="url_home">"https://reactor.pbip.ru/nikita4you/scripts/get_all_post.php"</string>
+    <string name="url_hot">"https://reactor.pbip.ru/nikita4you/scripts/get_hot.php"</string>
     <string name="url_like">"https://reactor.pbip.ru/nikita4you/scripts/set_like_dislike.php"</string>
     <string name="url_getcomments">"https://reactor.pbip.ru/nikita4you/scripts/get_comments.php"</string>
     <string name="url_addcomment">"https://reactor.pbip.ru/nikita4you/scripts/save_comments.php"</string>
