@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="refresh">Произошла сетевая ошибка, сделайте свайп вниз чтобы обновить</string>
+    <string name="favorites_refresh">Скорее всего вы не добавили ни одной записи в избранное</string>
+
+    <!-- TITLES -->
+    <string name="title_home">Главная</string>
+    <string name="title_hot">Горячее</string>
+    <string name="title_favorites">Избранное</string>
+    <string name="title_other">Прочее</string>
+    <string name="title_profile">Профиль</string>
+    <string name="title_about">О приложении</string>
+    <string name="title_comments">Комментарии</string>
+
+    <string name="profile">Профиль</string>
+    <string name="rate_app">Оценить приложение</string>
+    <string name="about">О приложении</string>
+    <string name="your_comment">Ваш комментарий</string>
+
+    <!-- TEXT -->
+    <string name="login">Авторизироваться в приложении</string>
+    <string name="logout">Разлогиниться</string>
+    <string name="save">Сохранить</string>
+    <string name="about_p1">Бля бля бля бля</string>
+</resources>
