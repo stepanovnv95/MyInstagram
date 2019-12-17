@@ -42,14 +42,13 @@ abstract class BaseListFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+        activity!!.title = getTitle()
         if (_view != null)
             return _view
 
         _appContext = activity!!.applicationContext
 
         _view = inflater.inflate(R.layout.fragment_base_list, container, false)
-        activity!!.title = getTitle()
 
         _refreshView = _view!!.findViewById(R.id.refresh)
         _emptyHintView = _view!!.findViewById(R.id.empty)
