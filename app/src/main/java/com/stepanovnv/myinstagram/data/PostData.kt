@@ -1,10 +1,13 @@
 package com.stepanovnv.myinstagram.data
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import com.stepanovnv.myinstagram.http.HttpClient
 import com.stepanovnv.myinstagram.http.requests.LikesRequest
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class PostData(
@@ -43,9 +46,14 @@ class PostData(
     }
 
     fun setFavorited(favorite: Boolean) {
-        if (favorite)
-            _favoritesDao.insert(Favorites(id, ""))
-        else
+        if (favorite) {
+            val calendar = Calendar.getInstance()
+            val now = calendar.time
+            @SuppressLint("SimpleDateFormat")
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
+            val timestamp: String = simpleDateFormat.format(now)
+            _favoritesDao.insert(Favorites(id, timestamp))
+        } else
             _favoritesDao.delete(Favorites(id, ""))
     }
 
