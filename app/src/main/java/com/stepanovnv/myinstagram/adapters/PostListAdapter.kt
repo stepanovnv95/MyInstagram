@@ -14,7 +14,7 @@ class PostListAdapter(private val _dataset: Collection<PostData>)
 
     class PostViewHolder(val view: PostView) : RecyclerView.ViewHolder(view)
     class AdmobViewHolder(view: AdmobView) : RecyclerView.ViewHolder(view)
-    private val _postsForAd = 12
+    private val _postsForAd = 10
 
     var onEndScrolled: (() -> Unit)? = null
 
