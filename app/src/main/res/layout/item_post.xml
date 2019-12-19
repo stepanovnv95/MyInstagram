@@ -43,7 +43,8 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_like"
                     android:tint="@color/colorPrimaryDark"
-                    android:contentDescription="@string/description_like"/>
+                    android:contentDescription="@string/description_like"
+                    android:layout_margin="8dp"/>
             <TextView
                     android:id="@+id/like_text"
                     android:layout_width="wrap_content"
@@ -63,9 +64,10 @@
                     android:id="@+id/dislike_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_like"
+                    android:src="@drawable/ic_dislike"
                     android:tint="@color/colorPrimaryDark"
-                    android:contentDescription="@string/description_like"/>
+                    android:contentDescription="@string/description_like"
+                    android:layout_margin="8dp"/>
             <TextView
                     android:id="@+id/dislike_text"
                     android:layout_width="wrap_content"
@@ -86,7 +88,8 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_comments"
                     android:tint="@color/colorPrimaryDark"
-                    android:contentDescription="@string/description_like"/>
+                    android:contentDescription="@string/description_like"
+                    android:layout_margin="8dp"/>
             <TextView
                     android:id="@+id/comments_text"
                     android:layout_width="wrap_content"
@@ -108,7 +111,8 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_favorite"
                     android:tint="@color/colorPrimaryDark"
-                    android:contentDescription="@string/description_like"/>
+                    android:contentDescription="@string/description_like"
+                    android:layout_margin="8dp"/>
         </LinearLayout>
 
     </LinearLayout>

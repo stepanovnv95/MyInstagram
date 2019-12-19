@@ -17,7 +17,8 @@
             android:background="@color/background"
             app:itemIconTint="@color/button_color_selector"
             app:itemHorizontalTranslationEnabled="false"
-            app:labelVisibilityMode="unlabeled">
+            app:labelVisibilityMode="unlabeled"
+            app:itemIconSize="24dp">
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <FrameLayout

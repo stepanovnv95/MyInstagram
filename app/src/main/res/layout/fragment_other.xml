@@ -31,7 +31,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_like"
+                    app:srcCompat="@drawable/ic_profile"
+                    android:tint="@color/colorPrimaryDark"
                     tools:ignore="ContentDescription" />
 
             <TextView
@@ -73,7 +74,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_like"
+                    app:srcCompat="@drawable/ic_favorite"
+                    android:tint="@color/colorPrimaryDark"
                     tools:ignore="ContentDescription" />
 
             <TextView
@@ -115,7 +117,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_like"
+                    app:srcCompat="@drawable/ic_about"
+                    android:tint="@color/colorPrimaryDark"
                     tools:ignore="ContentDescription" />
 
             <TextView
