@@ -1,11 +1,14 @@
 package com.stepanovnv.myinstagram.views
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +41,8 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
     private val _commentsCount: TextView
     private val _favoriteButton: View
     private val _favoriteImage: ImageView
+    private val _shareButton: View
+    private var _image: Bitmap? = null
 
     var postData: PostData? = null
         set(value) {
@@ -85,6 +90,7 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
         _commentsCount = findViewById(R.id.comments_text)
         _favoriteButton = findViewById(R.id.favorite_button)
         _favoriteImage = findViewById(R.id.favorite_image)
+        _shareButton = findViewById(R.id.share_button)
 
         _likeButton.setOnClickListener {
             postData?.setLiked( ! postData!!.isLiked() )
@@ -103,6 +109,10 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
         _favoriteButton.setOnClickListener {
             postData?.setFavorited( ! postData!!.isFavorited() )
             updateFavorite()
+        }
+
+        _shareButton.setOnClickListener {
+            shareImage()
         }
     }
 
@@ -150,6 +160,7 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
 
     private fun setImage(image: Bitmap?) {
         if (image != null) {
+            _image = image
             _imageView.setColorFilter(Color.rgb(0, 0, 0), PorterDuff.Mode.ADD)
             _imageView.scaleType = ImageView.ScaleType.CENTER_CROP
             _imageView.setImageBitmap(image)
@@ -169,6 +180,45 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
         val intent = Intent(context as Activity, CommentsActivity::class.java)
         intent.putExtra("POST_ID", postData!!.id)
         context.startActivity(intent)
+    }
+
+    @SuppressLint("WrongThread", "SdCardPath")
+    private fun shareImage() {
+        _image ?: return
+
+//        val img = _image
+//        val shareIntent = Intent(Intent.ACTION_SEND)
+//        shareIntent.type = "image/jpeg"
+//        val bytes = ByteArrayOutputStream()
+//        img!!.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+//        val path = context.getExternalFilesDir(null)!!.absolutePath + File.separator + "temporary_file.jpg"
+//        val file = File(path)
+//        try {
+//            file.createNewFile()
+//            val fo = FileOutputStream(file)
+//            fo.write(bytes.toByteArray())
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
+//        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path))
+//        context.startActivity(Intent.createChooser(shareIntent, "Share Image"))
+
+        val img = _image
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "image/jpeg"
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, "title")
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+        val uri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        try {
+            val outputStream = context.contentResolver.openOutputStream(uri!!)
+            img!!.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            outputStream!!.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        context.startActivity(Intent.createChooser(shareIntent, "Share Image"))
     }
 
 }
