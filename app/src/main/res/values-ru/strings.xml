@@ -22,4 +22,5 @@
     <string name="logout">Разлогиниться</string>
     <string name="save">Сохранить</string>
     <string name="about_p1">Бля бля бля бля</string>
+    <string name="push_notification">Зайди в меня!</string>
 </resources>

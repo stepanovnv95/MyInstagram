@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Instagram</string>
+    <string name="app_name" translatable="false">My Instagram</string>
     <string name="refresh">There was a network error, swipe down to update</string>
     <string name="favorites_refresh">Maybe you have not added an any post to your favorites</string>
 
@@ -18,23 +18,27 @@
     <string name="your_comment">Your comment</string>
 
     <!-- URLS -->
-    <string name="url_home">"https://reactor.pbip.ru/nikita4you/scripts/get_all_post.php"</string>
-    <string name="url_hot">"https://reactor.pbip.ru/nikita4you/scripts/get_hot.php"</string>
-    <string name="url_favorites">"https://reactor.pbip.ru/nikita4you/scripts/get_my_saves.php"</string>
-    <string name="url_like">"https://reactor.pbip.ru/nikita4you/scripts/set_like_dislike.php"</string>
-    <string name="url_getcomments">"https://reactor.pbip.ru/nikita4you/scripts/get_comments.php"</string>
-    <string name="url_addcomment">"https://reactor.pbip.ru/nikita4you/scripts/save_comments.php"</string>
+    <string name="url_home" translatable="false">"https://reactor.pbip.ru/nikita4you/scripts/get_all_post.php"</string>
+    <string name="url_hot" translatable="false">"https://reactor.pbip.ru/nikita4you/scripts/get_hot.php"</string>
+    <string name="url_favorites" translatable="false">"https://reactor.pbip.ru/nikita4you/scripts/get_my_saves.php"</string>
+    <string name="url_like" translatable="false">"https://reactor.pbip.ru/nikita4you/scripts/set_like_dislike.php"</string>
+    <string name="url_getcomments" translatable="false">"https://reactor.pbip.ru/nikita4you/scripts/get_comments.php"</string>
+    <string name="url_addcomment" translatable="false">"https://reactor.pbip.ru/nikita4you/scripts/save_comments.php"</string>
 
-    <string name="url_rate">https://www.youtube.com/watch?v=dQw4w9WgXcQ</string>
+    <string name="url_rate" translatable="false">https://www.youtube.com/watch?v=dQw4w9WgXcQ</string>
 
     <!-- CONTENT DESCRIPTIONS -->
-    <string name="description_arrow_down">Arrow down</string>
-    <string name="description_post_image">Post image</string>
-    <string name="description_like">Like</string>
+    <string name="description_arrow_down" translatable="false">Arrow down</string>
+    <string name="description_post_image" translatable="false">Post image</string>
+    <string name="description_like" translatable="false">Like</string>
 
     <!-- TEXT -->
     <string name="login">Log in to the application</string>
     <string name="logout">Log out</string>
     <string name="save">Save</string>
     <string name="about_p1">Бла бла бла бла бла</string>
+
+    <string name="push_notification_hour" translatable="false">10</string>
+    <string name="push_notification_minute" translatable="false">39</string>
+    <string name="push_notification">LOL KEK CHEBUREK</string>
 </resources>
