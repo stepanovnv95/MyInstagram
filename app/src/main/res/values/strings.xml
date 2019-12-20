@@ -38,8 +38,9 @@
     <string name="save">Save</string>
     <string name="about_p1">Бла бла бла бла бла</string>
 
-    <string name="push_notification_hour" translatable="false">10</string>
-    <string name="push_notification_minute" translatable="false">39</string>
+    <string name="alarm_key" translatable="false">com.stepanovnv.myinstagram.DAILY_NOTIFICATION</string>
+    <string name="push_notification_hour" translatable="false">7</string>
+    <string name="push_notification_minute" translatable="false">45</string>
     <string name="push_notification">LOL KEK CHEBUREK</string>
     <string name="ad_chance" translatable="false">25</string>
 </resources>
