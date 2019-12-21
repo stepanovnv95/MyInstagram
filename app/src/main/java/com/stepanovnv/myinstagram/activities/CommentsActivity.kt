@@ -1,5 +1,6 @@
 package com.stepanovnv.myinstagram.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,9 @@ import com.stepanovnv.myinstagram.http.HttpClient
 import com.stepanovnv.myinstagram.http.requests.AddCommentRequest
 import com.stepanovnv.myinstagram.http.requests.GetCommentsRequest
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 @Suppress("PrivatePropertyName")
@@ -103,12 +107,19 @@ class CommentsActivity : AppCompatActivity() {
         ))
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun onCommentAdded(/*jsonObject: JSONObject*/) {
+        val calendar = Calendar.getInstance()
+        val now = calendar.time
+        val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val timestamp: String = simpleDateFormat.format(now)
+
         val myComment = Comment(
             _userDao.getKey("username")!!.value,
             _commentText,
-            "current date"
+            timestamp
         )
+        _commentTextView.text = ""
         _commentsArray.add(myComment)
         _commentsListAdapter.notifyItemRangeInserted(_commentsArray.size - 1, 1)
     }
