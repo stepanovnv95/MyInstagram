@@ -21,6 +21,6 @@
     <string name="login">Авторизироваться в приложении</string>
     <string name="logout">Разлогиниться</string>
     <string name="save">Сохранить</string>
-    <string name="about_p1">Бля бля бля бля</string>
+    <string name="about_p1">Разработчик: stepanovnv95@gmail.com\nСпасибо за иконки следующим авторам: Freepik, Pixel perfect, Smashicons.</string>
     <string name="push_notification">Зайди в меня!</string>
 </resources>

@@ -36,11 +36,11 @@
     <string name="login">Log in to the application</string>
     <string name="logout">Log out</string>
     <string name="save">Save</string>
-    <string name="about_p1">Бла бла бла бла бла</string>
 
     <string name="alarm_key" translatable="false">com.stepanovnv.myinstagram.DAILY_NOTIFICATION</string>
-    <string name="push_notification_hour" translatable="false">7</string>
+    <string name="push_notification_hour" translatable="false">19</string>
     <string name="push_notification_minute" translatable="false">45</string>
     <string name="push_notification">LOL KEK CHEBUREK</string>
     <string name="ad_chance" translatable="false">25</string>
+    <string name="about_p1">Prod by stepanovnv95@gmail.com\nIcons by Freepik, Pixel perfect, Smashicons</string>
 </resources>
