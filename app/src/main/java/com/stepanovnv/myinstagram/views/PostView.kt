@@ -17,6 +17,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.stepanovnv.myinstagram.PermissionHelper
 import com.stepanovnv.myinstagram.R
 import com.stepanovnv.myinstagram.activities.CommentsActivity
 import com.stepanovnv.myinstagram.data.PostData
@@ -186,22 +187,10 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
     private fun shareImage() {
         _image ?: return
 
-//        val img = _image
-//        val shareIntent = Intent(Intent.ACTION_SEND)
-//        shareIntent.type = "image/jpeg"
-//        val bytes = ByteArrayOutputStream()
-//        img!!.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-//        val path = context.getExternalFilesDir(null)!!.absolutePath + File.separator + "temporary_file.jpg"
-//        val file = File(path)
-//        try {
-//            file.createNewFile()
-//            val fo = FileOutputStream(file)
-//            fo.write(bytes.toByteArray())
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(path))
-//        context.startActivity(Intent.createChooser(shareIntent, "Share Image"))
+        if (!PermissionHelper.check_WRITE_EXTERNAL_STORAGE(context)) {
+            Log.d(_tag, "check_WRITE_EXTERNAL_STORAGE is false")
+            return
+        }
 
         val img = _image
         val shareIntent = Intent(Intent.ACTION_SEND)
