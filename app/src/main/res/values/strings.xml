@@ -36,6 +36,7 @@
     <string name="login">Log in to the application</string>
     <string name="logout">Log out</string>
     <string name="save">Save</string>
+    <string name="saved_toast">Your name %s saved</string>
 
     <string name="alarm_key" translatable="false">com.stepanovnv.myinstagram.DAILY_NOTIFICATION</string>
     <string name="push_notification_hour" translatable="false">19</string>

@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -98,6 +99,13 @@ class ProfileActivity : AppCompatActivity() {
         _userDao.updateKey("username", username ?: "")
 
         _usernameInput.text = _userDao.getKey("username")?.value ?: ""
+
+        val toast = Toast.makeText(
+            applicationContext, getString(R.string.saved_toast)
+                .format(_usernameInput.text.toString()),
+            Toast.LENGTH_SHORT
+        )
+        toast.show()
     }
 
     private fun onSingButtonClick() {
