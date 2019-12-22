@@ -7,11 +7,19 @@ import org.json.JSONObject
 
 class HotRequest(
     context: Context?,
-    lastId: Int? = null,
+    private val _lastIndex: Int? = null,
     onResponse: ((JSONObject) -> Unit)? = null,
     onError: ((String) -> Unit)? = null
-) : HomeRequest(context, lastId, onResponse, onError) {
+) : PostRequest(context, onResponse, onError) {
 
     override val url: String = getString(R.string.url_hot)
+
+    override val params: Map<String, String>
+        get() {
+            val p = HashMap<String, String>()
+            if (_lastIndex != null)
+                p["last_index"] = _lastIndex.toString()
+            return p
+        }
 
 }

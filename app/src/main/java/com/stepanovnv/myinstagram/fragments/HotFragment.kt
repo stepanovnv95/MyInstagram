@@ -11,7 +11,7 @@ class HotFragment : BaseListFragment() {
     override fun constructHttpRequest(): PostRequest {
         return HotRequest(
             context,
-            if (postsArray.size > 0) postsArray.last().id else null
+            if (postsArray.size > 0) postsArray.size - 1 else null
         )
     }
 
