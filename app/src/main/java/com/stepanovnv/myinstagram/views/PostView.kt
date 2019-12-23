@@ -1,5 +1,6 @@
 package com.stepanovnv.myinstagram.views
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
@@ -16,13 +17,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.stepanovnv.myinstagram.PermissionHelper
+import com.eazypermissions.common.model.PermissionResult
+import com.eazypermissions.coroutinespermission.PermissionManager
 import com.stepanovnv.myinstagram.R
 import com.stepanovnv.myinstagram.activities.CommentsActivity
 import com.stepanovnv.myinstagram.data.PostData
 import com.stepanovnv.myinstagram.http.HttpClient
 import com.stepanovnv.myinstagram.http.requests.ImageRequest
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataListener*/ {
@@ -187,27 +194,65 @@ class PostView(context: Context) : LinearLayout(context)/*, PostData.PostDataLis
     private fun shareImage() {
         _image ?: return
 
-        if (!PermissionHelper.check_WRITE_EXTERNAL_STORAGE(context)) {
-            Log.d(_tag, "check_WRITE_EXTERNAL_STORAGE is false")
-            return
+        val startSharing = {
+            val img = _image
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "image/jpeg"
+            val values = ContentValues()
+            values.put(MediaStore.Images.Media.TITLE, "title")
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            val uri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+            try {
+                val outputStream = context.contentResolver.openOutputStream(uri!!)
+                img!!.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                outputStream!!.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            context.startActivity(Intent.createChooser(shareIntent, "Share Image"))
         }
 
-        val img = _image
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "image/jpeg"
-        val values = ContentValues()
-        values.put(MediaStore.Images.Media.TITLE, "title")
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-        val uri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        try {
-            val outputStream = context.contentResolver.openOutputStream(uri!!)
-            img!!.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-            outputStream!!.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
+        GlobalScope.launch(Dispatchers.Main) {
+            val permissionResult = PermissionManager.requestPermissions(
+                context as AppCompatActivity,
+                4,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            when (permissionResult) {
+                is PermissionResult.PermissionGranted -> {
+                        startSharing()
+                    }
+                else -> {
+                    val toast = Toast.makeText(
+                        context.applicationContext, context.getString(R.string.share_not_allowed),
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
+                }
+            }
         }
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-        context.startActivity(Intent.createChooser(shareIntent, "Share Image"))
+
+//        PermissionManager.requestPermissions(
+//            context as AppCompatActivity,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE
+//        ) {
+//            requestCode = 4
+//            resultCallback = {
+//                when(this) {
+//                    is PermissionResult.PermissionGranted -> {
+//                        startSharing()
+//                    }
+//                    else -> {
+//                        val toast = Toast.makeText(
+//                            context.applicationContext, "LOL KEK CHEBUREK",
+//                            Toast.LENGTH_SHORT
+//                        )
+//                        toast.show()
+//                    }
+//                }
+//            }
+//        }
     }
 
 }

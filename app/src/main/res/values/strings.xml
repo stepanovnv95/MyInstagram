@@ -44,4 +44,6 @@
     <string name="push_notification">LOL KEK CHEBUREK</string>
     <string name="ad_chance" translatable="false">25</string>
     <string name="about_p1">Prod by stepanovnv95@gmail.com\nIcons by Freepik, Pixel perfect, Smashicons</string>
+
+    <string name="share_not_allowed">Please confirm the permission for image sharing.</string>
 </resources>

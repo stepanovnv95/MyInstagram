@@ -24,4 +24,5 @@
     <string name="about_p1">Разработчик: stepanovnv95@gmail.com\nСпасибо за иконки следующим авторам: Freepik, Pixel perfect, Smashicons.</string>
     <string name="push_notification">Зайди в меня!</string>
     <string name="saved_toast">Ваше имя %s сохранено</string>
+    <string name="share_not_allowed">Пожалуйста, подтвердите разрешение для того чтобы делиться фотографиями</string>
 </resources>
