@@ -61,8 +61,15 @@ class ProfileActivity : AppCompatActivity() {
         _logoutButton.setOnClickListener { onLogoutClick() }
         _saveButton.setOnClickListener {
             val newUsername = _usernameInput.text.toString()
-            if (newUsername != "")
+            if (newUsername != "") {
                 updateUsername(newUsername)
+                val toast = Toast.makeText(
+                    applicationContext, getString(R.string.saved_toast)
+                        .format(_usernameInput.text.toString()),
+                    Toast.LENGTH_SHORT
+                )
+                toast.show()
+            }
         }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -99,13 +106,6 @@ class ProfileActivity : AppCompatActivity() {
         _userDao.updateKey("username", username ?: "")
 
         _usernameInput.text = _userDao.getKey("username")?.value ?: ""
-
-        val toast = Toast.makeText(
-            applicationContext, getString(R.string.saved_toast)
-                .format(_usernameInput.text.toString()),
-            Toast.LENGTH_SHORT
-        )
-        toast.show()
     }
 
     private fun onSingButtonClick() {
